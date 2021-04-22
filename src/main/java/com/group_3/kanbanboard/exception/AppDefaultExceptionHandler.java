@@ -33,7 +33,7 @@ public class AppDefaultExceptionHandler {
     }
 
     /**
-     * @param e - {@link AuthenticationException} call then authentication error .
+     * @param e - {@link AuthenticationException} throw then authentication error .
      * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.
      * Set the {@link HttpStatus} code to 401.
      */
@@ -46,7 +46,7 @@ public class AppDefaultExceptionHandler {
     }
 
     /**
-     * @param e - {@link AccessDeniedException} called when there was an attempt to access a limited to access resource.
+     * @param e - {@link AccessDeniedException} throw when there was an attempt to access a limited to access resource.
      * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.
      * Set the {@link HttpStatus} code to 401.
      */
@@ -60,7 +60,7 @@ public class AppDefaultExceptionHandler {
     }
 
     /**
-     * @param e - {@link IllegalArgumentException} called when incorrect method parameters in runtime.
+     * @param e - {@link IllegalArgumentException} throw when incorrect method parameters in runtime.
      * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.
      * Set the {@link HttpStatus} code to 405.
      */
@@ -73,7 +73,7 @@ public class AppDefaultExceptionHandler {
     }
 
     /**
-     * @param e - {@link IOException} called then I / O errors
+     * @param e - {@link IOException} throw then I / O errors
      * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.
      * Set the {@link HttpStatus} code to 400.
      */
@@ -86,7 +86,7 @@ public class AppDefaultExceptionHandler {
     }
 
     /**
-     * @param e - {@link IOException} called then I / O errors
+     * @param e - {@link RuntimeException} throw then errors occurrence in runtime
      * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.
      * Set the {@link HttpStatus} code to 400.
      */
