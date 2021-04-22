@@ -8,7 +8,7 @@ public class ProjectResponseDto {
     private String title;
     @Schema(description = "Описание проекта")
     private String description;
-    @Schema(description = "СОздатель проекта")
+    @Schema(description = "Создатель проекта")
     private Long lead_id;
     @Schema(description = "Старт проекта")
     private Boolean is_started;
@@ -47,11 +47,11 @@ public class ProjectResponseDto {
         this.lead_id = lead_id;
     }
 
-    public Boolean getIs_started() {
+    public Boolean IsStarted() {
         return is_started;
     }
 
-    public void setIs_started(Boolean is_started) {
+    public void setStarted(Boolean is_started) {
         this.is_started = is_started;
     }
 }
