@@ -19,9 +19,11 @@ import java.util.Date;
 public class AppDefaultExceptionHandler {
 
     /**
+     * Handle custom project {@link ResourceNotFoundException} if missing resource requested.
+     * Set the {@link HttpStatus} code to 404.
+     *
      * @param e - {@link ResourceNotFoundException} throw then missing resource requested.
      * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.
-     * Set the {@link HttpStatus} code to 404.
      */
     //Запрошен отсутствующий ресурс(Task, Project, User, Release и т.д )  можно раскидать по отдельным классам
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -33,11 +35,13 @@ public class AppDefaultExceptionHandler {
     }
 
     /**
-     * @param e - {@link AuthenticationException} throw then authentication error .
-     * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.
+     * Handle Spring Security {@link AuthenticationException} if authentication error.
      * Set the {@link HttpStatus} code to 401.
+     *
+     * @param e - {@link AuthenticationException} throw then authentication error.
+     * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.
      */
-    //Ошибка аутентификации(Spring security)
+
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<ExceptionResponse> exceptionHandler(AuthenticationException e) {
@@ -46,11 +50,13 @@ public class AppDefaultExceptionHandler {
     }
 
     /**
+     * Handle Spring Security {@link AccessDeniedException} if was an attempt to access a limited to access resource.
+     * Set the {@link HttpStatus} code to 401.
+     *
      * @param e - {@link AccessDeniedException} throw when there was an attempt to access a limited to access resource.
      * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.
-     * Set the {@link HttpStatus} code to 401.
      */
-    //Ошибка ограничения доступа(Spring security)
+
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<ExceptionResponse> exceptionHandler(AccessDeniedException e) {
@@ -60,11 +66,13 @@ public class AppDefaultExceptionHandler {
     }
 
     /**
+     * Handle {@link IllegalArgumentException} if incorrect method parameters in runtime.
+     * Set the {@link HttpStatus} code to 405.
+     *
      * @param e - {@link IllegalArgumentException} throw when incorrect method parameters in runtime.
      * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.
-     * Set the {@link HttpStatus} code to 405.
      */
-    //Неправильные параметры методов в Runtime
+
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ResponseEntity<ExceptionResponse> exceptionHandler(IllegalArgumentException e) {
@@ -73,11 +81,13 @@ public class AppDefaultExceptionHandler {
     }
 
     /**
-     * @param e - {@link IOException} throw then I / O errors
-     * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.
+     * Handle {@link IOException} for I/O errors.
      * Set the {@link HttpStatus} code to 400.
+     *
+     * @param e - {@link IOException} throw then I/O errors
+     * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.
      */
-    //Ошибки ввода-вывода
+
     @ExceptionHandler(IOException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ExceptionResponse> exceptionHandler(IOException e) {
@@ -86,11 +96,13 @@ public class AppDefaultExceptionHandler {
     }
 
     /**
-     * @param e - {@link RuntimeException} throw then errors occurrence in runtime
-     * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.
+     * Handle {@link RuntimeException} then errors occurrence in runtime(unchecked).
      * Set the {@link HttpStatus} code to 400.
+     *
+     * @param e - {@link RuntimeException} throw then errors occurrence in runtime
+     * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.     *
      */
-    //Другие ошибки Runtime
+
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ExceptionResponse> exceptionHandler(RuntimeException e) {
@@ -99,11 +111,13 @@ public class AppDefaultExceptionHandler {
     }
 
     /**
+     * Handle {@link Exception}} for all other errors.
+     * Set the {@link HttpStatus} code to 400.
+     *
      * @param e - {@link Exception} called then all other errors
      * @return {@link ResponseEntity} wrapped {@link ExceptionResponse}.
-     * Set the {@link HttpStatus} code to 400.
      */
-    //Все прочие ошибки
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ExceptionResponse> exceptionHandler(Exception e) {
