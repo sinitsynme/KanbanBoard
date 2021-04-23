@@ -1,5 +1,7 @@
-package com.group_3.kanbanboard.exception;
+package com.group_3.kanbanboard.exception.handler;
 
+import com.group_3.kanbanboard.exception.ExceptionResponse;
+import com.group_3.kanbanboard.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
