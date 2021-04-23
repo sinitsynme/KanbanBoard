@@ -5,6 +5,7 @@ import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.io.IOException;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReleaseController {
 
   /**
-   *
+   * Get a release by its id
    * @param id Release id
    * @return Release with the given id
+   * @throws ResourceNotFoundException throw if id not found
    */
   @Operation(summary = "Получение релиза по id")
   @GetMapping("/{id}")
-  public ResponseEntity<ReleaseResponseDto> getReleaseById(@PathVariable Long id) {
+  public ResponseEntity<ReleaseResponseDto> getReleaseById(@PathVariable Long id) throws ResourceNotFoundException {
     return ResponseEntity.ok().body(new ReleaseResponseDto());
   }
 
@@ -36,13 +38,13 @@ public class ReleaseController {
    * @param releaseRequestDto Release being added
    * @param projectId id of project to where release is being added
    * @return Added release
-   * @throws IOException Release with the same version already exists
-   * @throws IOException Project with id doesn't exist
+   * @throws IOException throw if release with the same version already exists
+   * @throws ResourceNotFoundException throw if project with id doesn't exist
    */
   @Operation(summary = "Добавление релиза")
-  @PostMapping()
+  @PostMapping
   public ResponseEntity<ReleaseResponseDto> createRelease(Long projectId,
-      @RequestBody ReleaseRequestDto releaseRequestDto) throws IOException{
+      @RequestBody ReleaseRequestDto releaseRequestDto) throws IOException, ResourceNotFoundException{
 
     return ResponseEntity.ok(new ReleaseResponseDto());
   }
@@ -52,27 +54,25 @@ public class ReleaseController {
    * @param id Release id
    * @param releaseRequestDto New version of release
    * @return Updated release
-   * @throws IOException Id not found
+   * @throws ResourceNotFoundException throw if id not found
    */
   @Operation(summary = "Обновление релиза")
   @PutMapping("/{id}")
   public ResponseEntity<ReleaseResponseDto> updateRelease(@PathVariable Long id,
-      @RequestBody ReleaseRequestDto releaseRequestDto) throws IOException {
+      @RequestBody ReleaseRequestDto releaseRequestDto) throws ResourceNotFoundException {
 
     return ResponseEntity.ok().body(new ReleaseResponseDto());
-
   }
 
   /**
    * Delete a non-intentional created release
    * @param id Release id
    * @return Deleted release
-   * @throws IOException Id not found
+   * @throws ResourceNotFoundException throw if not found
    */
   @Operation(summary = "Удаление релиза")
   @DeleteMapping("/{id}")
-  public ResponseEntity<ReleaseResponseDto> deleteRelease(@PathVariable Long id) throws IOException{
+  public ResponseEntity<ReleaseResponseDto> deleteRelease(@PathVariable Long id) throws ResourceNotFoundException {
     return ResponseEntity.ok().body(new ReleaseResponseDto());
   }
-
 }
