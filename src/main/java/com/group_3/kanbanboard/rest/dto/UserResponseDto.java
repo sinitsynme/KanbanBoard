@@ -4,19 +4,19 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
     @Schema(description = "Пользователь")
     public class UserResponseDto {
-    @Schema(description = "мя пользователя")
+    @Schema(description = "Имя пользователя")
     private String name;
     @Schema(description = "E-mail")
-    private String e_mail;
+    private String mail;
     @Schema(description = "Роль")
     private String role;
 
     public UserResponseDto() {
     }
 
-    public UserResponseDto(String name, String e_mail, String role) {
+    public UserResponseDto(String name, String mail, String role) {
         this.name = name;
-        this.e_mail = e_mail;
+        this.mail = mail;
         this.role = role;
     }
 
@@ -28,12 +28,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
         this.name = name;
     }
 
-    public String getE_mail() {
-        return e_mail;
+    public String getMail() {
+        return mail;
     }
 
-    public void setE_mail(String e_mail) {
-        this.e_mail = e_mail;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public String getRole() {

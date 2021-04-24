@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class UserController {
     @PostMapping(value = "/users")
     public ResponseEntity<UserResponseDto> addUser(@RequestBody UserRequestDto requestDto)  {
 
-        return ResponseEntity.ok().body(new UserResponseDto(requestDto.getName(), requestDto.getRole(), requestDto.getE_mail()));
+        return ResponseEntity.ok().body(new UserResponseDto(requestDto.getName(), requestDto.getRole(), requestDto.getMail()));
     }
 
     @Operation(summary = "Получение пользователя по id")
