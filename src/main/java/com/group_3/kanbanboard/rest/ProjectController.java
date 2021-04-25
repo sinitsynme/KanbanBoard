@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 public class ProjectController {
 
     @Operation(summary = "Добавить проект")
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<ProjectResponseDto> addProject(@RequestBody ProjectRequestDto requestDto)  {
         return ResponseEntity.ok().body(new ProjectResponseDto(requestDto.getTitle(), requestDto.getDescription(), requestDto.getLead_id(), requestDto.IsStarted()));
     }
 
     @Operation(summary = "Получить список всех проектов")
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<ProjectResponseDto> getProjects()  {
         return null;
     }
@@ -37,7 +37,7 @@ public class ProjectController {
     }
 
     @Operation(summary = "Удаление проекта")
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ProjectResponseDto> deleteProject(@PathVariable Long id)  {
 
         return ResponseEntity.ok().build();
