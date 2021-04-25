@@ -5,8 +5,6 @@ import java.sql.Date;
 
 public class ReleaseResponseDto {
 
-  private Long projectId;
-
   private String version;
 
   private Date startDate;
@@ -16,21 +14,12 @@ public class ReleaseResponseDto {
 
   public ReleaseResponseDto(){}
 
-  public ReleaseResponseDto(Long projectId, String version, Date startDate, Date endDate,
+  public ReleaseResponseDto(String version, Date startDate, Date endDate,
       ReleaseStatus status) {
-    this.projectId = projectId;
     this.version = version;
     this.startDate = startDate;
     this.endDate = endDate;
     this.status = status;
-  }
-
-  public Long getProjectId() {
-    return projectId;
-  }
-
-  public void setProjectId(Long projectId) {
-    this.projectId = projectId;
   }
 
   public String getVersion() {
