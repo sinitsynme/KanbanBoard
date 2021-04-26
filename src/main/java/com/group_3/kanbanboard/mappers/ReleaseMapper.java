@@ -12,10 +12,10 @@ public interface ReleaseMapper {
 
     public ReleaseRequestDto toRequestDto(ReleaseEntity entity);
     @InheritInverseConfiguration
-    public ReleaseEntity toReleaseEntity(ReleaseRequestDto requestDto);
+    public ReleaseEntity toEntity(ReleaseRequestDto requestDto);
 
 
     public ReleaseResponseDto toResponseDto(ReleaseEntity entity);
     @InheritInverseConfiguration
-    public ReleaseEntity toReleaseEntity(ReleaseResponseDto responseDto);
+    public ReleaseEntity toEntity(ReleaseResponseDto responseDto);
 }
