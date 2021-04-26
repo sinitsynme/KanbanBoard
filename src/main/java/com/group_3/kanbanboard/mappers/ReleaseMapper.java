@@ -10,16 +10,12 @@ import org.mapstruct.Mapping;
 @Mapper(uses = {ProjectMapper.class, TaskMapper.class}, componentModel = "spring")
 public interface ReleaseMapper {
 
-
     public ReleaseRequestDto toRequestDto(ReleaseEntity entity);
-
     @InheritInverseConfiguration
     public ReleaseEntity toReleaseEntity(ReleaseRequestDto requestDto);
 
 
-
     public ReleaseResponseDto toResponseDto(ReleaseEntity entity);
-
     @InheritInverseConfiguration
     public ReleaseEntity toReleaseEntity(ReleaseResponseDto responseDto);
 }
