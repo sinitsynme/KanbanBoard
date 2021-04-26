@@ -7,7 +7,7 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = {ProjectEntity.class, TaskEntity.class}, componentModel = "spring")
+@Mapper(uses = {ProjectMapper.class, TaskMapper.class}, componentModel = "spring")
 public interface ReleaseMapper {
 
 
