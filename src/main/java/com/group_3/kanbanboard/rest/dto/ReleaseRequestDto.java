@@ -2,10 +2,11 @@ package com.group_3.kanbanboard.rest.dto;
 
 import com.group_3.kanbanboard.enums.ReleaseStatus;
 import java.sql.Date;
+import java.util.UUID;
 
 public class ReleaseRequestDto {
 
-  private Long projectId;
+  private UUID projectId;
 
   private String version;
 
@@ -16,7 +17,7 @@ public class ReleaseRequestDto {
 
   public ReleaseRequestDto(){}
 
-  public ReleaseRequestDto(Long projectId, String version, Date startDate, Date endDate,
+  public ReleaseRequestDto(UUID projectId, String version, Date startDate, Date endDate,
       ReleaseStatus status) {
     this.projectId = projectId;
     this.version = version;
@@ -25,11 +26,11 @@ public class ReleaseRequestDto {
     this.status = status;
   }
 
-  public Long getProjectId() {
+  public UUID getProjectId() {
     return projectId;
   }
 
-  public void setProjectId(Long projectId) {
+  public void setProjectId(UUID projectId) {
     this.projectId = projectId;
   }
 
@@ -64,4 +65,5 @@ public class ReleaseRequestDto {
   public void setStatus(ReleaseStatus status) {
     this.status = status;
   }
+
 }
