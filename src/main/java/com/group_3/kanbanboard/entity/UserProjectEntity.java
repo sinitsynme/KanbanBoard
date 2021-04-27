@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "user_project")
-public class UserProject {
+public class UserProjectEntity {
 
     @EmbeddedId
     private UserProjectId id;
@@ -18,28 +18,28 @@ public class UserProject {
     private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("userId")
+    @MapsId("projectId")
     private ProjectEntity project;
 
     @Column (name = "user_role")
     @Enumerated(value = EnumType.STRING)
     private UserRole userRole;
 
-    public UserProject(UserEntity user, ProjectEntity project, UserRole userRole) {
+    public UserProjectEntity(UserEntity user, ProjectEntity project, UserRole userRole) {
         this.user = user;
         this.project = project;
         this.userRole = userRole;
         this.id = new UserProjectId(user.getId(), project.getId());
     }
 
-    public UserProject() {
+    public UserProjectEntity() {
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserProject that = (UserProject) o;
+        UserProjectEntity that = (UserProjectEntity) o;
         return Objects.equals(user, that.user) &&
                 Objects.equals(project, that.project);
     }
