@@ -79,7 +79,7 @@ public class AppDefaultExceptionHandler {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ResponseEntity<ExceptionResponse> exceptionHandler(IllegalArgumentException e) {
         ExceptionResponse response = new ExceptionResponse(new Date(), e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.METHOD_NOT_ALLOWED);
+        return new  ResponseEntity<>(response, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     /**
