@@ -5,10 +5,9 @@ import com.group_3.kanbanboard.rest.dto.ReleaseRequestDto;
 import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
-@Mapper(uses = {ProjectMapper.class, TaskMapper.class}, componentModel = "spring")
-public interface ReleaseMapper {
+@Mapper(uses = {           }, componentModel = "spring")
+public interface TaskMapper {
 
     public ReleaseRequestDto toRequestDto(ReleaseEntity entity);
     @InheritInverseConfiguration

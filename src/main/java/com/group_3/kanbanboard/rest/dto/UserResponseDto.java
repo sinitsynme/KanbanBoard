@@ -2,10 +2,12 @@ package com.group_3.kanbanboard.rest.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-    @Schema(description = "Пользователь")
-    public class UserResponseDto {
+@Schema(description = "Пользователь")
+public class UserResponseDto {
     @Schema(description = "Имя пользователя")
-    private String name;
+    private String firstName;
+    @Schema(description = "Фамилия пользователя")
+    private String secondName;
     @Schema(description = "E-mail")
     private String mail;
     @Schema(description = "Роль")
@@ -14,18 +16,27 @@ import io.swagger.v3.oas.annotations.media.Schema;
     public UserResponseDto() {
     }
 
-    public UserResponseDto(String name, String mail, String role) {
-        this.name = name;
+    public UserResponseDto(String firstName, String secondName, String mail, String role) {
+        this.firstName = firstName;
+        this.secondName = secondName;
         this.mail = mail;
         this.role = role;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
     public String getMail() {
