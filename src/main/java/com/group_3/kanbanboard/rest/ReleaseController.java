@@ -4,14 +4,10 @@ import com.group_3.kanbanboard.exception.ProjectNotFoundException;
 import com.group_3.kanbanboard.exception.ReleaseNotFoundException;
 import com.group_3.kanbanboard.rest.dto.ReleaseRequestDto;
 import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
-import com.group_3.kanbanboard.service.ReleaseService;
-import com.group_3.kanbanboard.service.ReleaseServiceImpl;
+import com.group_3.kanbanboard.service.impl.ReleaseServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -64,18 +60,17 @@ public class ReleaseController {
    * Create a release
    *
    * @param releaseRequestDto Release being added
-   * @param projectId         id of project to where release is being added
    * @return Added release
    * @throws ProjectNotFoundException throw if release with the same version already exists
    * @throws ReleaseNotFoundException throw if project with id doesn't exist
    */
   @Operation(summary = "Добавление релиза")
   @PostMapping
-  public ResponseEntity<ReleaseResponseDto> createRelease(UUID projectId,
+  public ResponseEntity<ReleaseResponseDto> createRelease(
       @RequestBody ReleaseRequestDto releaseRequestDto)
       throws ProjectNotFoundException, ReleaseNotFoundException {
 
-    return ResponseEntity.ok(releaseService.addRelease(projectId, releaseRequestDto));
+    return ResponseEntity.ok(releaseService.addRelease(releaseRequestDto));
   }
 
   /**
