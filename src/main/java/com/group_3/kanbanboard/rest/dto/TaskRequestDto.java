@@ -6,8 +6,8 @@ import java.util.UUID;
 
 @Schema(description = "Задача")
 public class TaskRequestDto {
-    @Schema(description ="id задачи")
-    private UUID id;
+//    @Schema(description ="id задачи")
+//    private UUID id;
     @Schema(description = "Название задачи")
     private String title;
     @Schema(description = "Категория задачи")
@@ -22,9 +22,8 @@ public class TaskRequestDto {
     public TaskRequestDto() {
     }
 
-    public TaskRequestDto(UUID id, String title, String category,
+    public TaskRequestDto(String title, String category,
                           String description, String status, int releaseId) {
-        this.id = id;
         this.title = title;
         this.category = category;
         this.description = description;
