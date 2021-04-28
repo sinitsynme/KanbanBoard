@@ -2,6 +2,7 @@ package com.group_3.kanbanboard.entity;
 
 import com.group_3.kanbanboard.enums.ReleaseStatus;
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
