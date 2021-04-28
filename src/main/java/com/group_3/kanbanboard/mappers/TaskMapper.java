@@ -1,20 +1,23 @@
 package com.group_3.kanbanboard.mappers;
 
 import com.group_3.kanbanboard.entity.ReleaseEntity;
+import com.group_3.kanbanboard.entity.TaskEntity;
 import com.group_3.kanbanboard.rest.dto.ReleaseRequestDto;
 import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
+import com.group_3.kanbanboard.rest.dto.TaskRequestDto;
+import com.group_3.kanbanboard.rest.dto.TaskResponseDto;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 
-@Mapper(uses = {           }, componentModel = "spring")
+@Mapper(uses = {UserMapper.class, ProjectMapper.class, ReleaseMapper.class}, componentModel = "spring")
 public interface TaskMapper {
 
-    public ReleaseRequestDto toRequestDto(ReleaseEntity entity);
+    public TaskRequestDto toRequestDto(TaskEntity entity);
     @InheritInverseConfiguration
-    public ReleaseEntity toEntity(ReleaseRequestDto requestDto);
+    public TaskEntity toEntity(TaskRequestDto requestDto);
 
 
-    public ReleaseResponseDto toResponseDto(ReleaseEntity entity);
+    public TaskResponseDto toResponseDto(TaskEntity entity);
     @InheritInverseConfiguration
-    public ReleaseEntity toEntity(ReleaseResponseDto responseDto);
+    public TaskEntity toEntity(TaskResponseDto responseDto);
 }
