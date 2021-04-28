@@ -27,7 +27,7 @@ public class ProjectEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<UserProjectEntity> users;
+    private List<UserProjectEntity> users = new ArrayList<>();
 
     @OneToMany(
         mappedBy = "project",
