@@ -13,13 +13,13 @@ public class ProjectEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name = "title")
+    @Column
     private String title;
-    @Column(name = "description")
+    @Column
     private String description;
-    @Column(name = "leadId")
-    private Long leadId;
-    @Column(name = "startProject")
+    @Column
+    private UUID leadId;
+    @Column
     private Boolean startProject;
 
     @OneToMany(
@@ -27,7 +27,7 @@ public class ProjectEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<UserProjectEntity> users = new ArrayList<>();
+    private List<UserProjectEntity> users;
 
     @OneToMany(
         mappedBy = "project",
@@ -68,11 +68,11 @@ public class ProjectEntity {
         this.description = description;
     }
 
-    public Long getLeadId() {
+    public UUID getLeadId() {
         return leadId;
     }
 
-    public void setLeadId(Long leadId) {
+    public void setLeadId(UUID leadId) {
         this.leadId = leadId;
     }
 
