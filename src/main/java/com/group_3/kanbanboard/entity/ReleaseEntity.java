@@ -1,9 +1,12 @@
 package com.group_3.kanbanboard.entity;
 
 import com.group_3.kanbanboard.enums.ReleaseStatus;
+import freemarker.ext.beans.TemplateAccessible;
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,7 +19,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.hibernate.annotations.Type;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "release")
@@ -30,34 +34,57 @@ public class ReleaseEntity {
   private String version;
 
   @Column
+  @Temporal(TemporalType.DATE)
   private Date startDate;
 
   @Column
+  @Temporal(TemporalType.DATE)
   private Date endDate;
 
   @Column
   @Enumerated(EnumType.STRING)
   private ReleaseStatus status;
 
-  public ReleaseEntity() {
-  }
-
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "project_id")
   private ProjectEntity project;
 
-  @OneToMany(fetch = FetchType.LAZY) //......
+  @OneToMany(cascade = CascadeType.ALL,
+      orphanRemoval = true,
+      mappedBy = "release")
   private List<TaskEntity> tasks;
 
+  public ReleaseEntity() {
+  }
+
   public ReleaseEntity(UUID id, String version, Date startDate, Date endDate, ProjectEntity project,
-      List<TaskEntity> tasks, ReleaseStatus status) {
+       ReleaseStatus status) {
     this.id = id;
     this.version = version;
     this.startDate = startDate;
     this.endDate = endDate;
     this.project = project;
-    this.tasks = tasks;
     this.status = status;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ReleaseEntity that = (ReleaseEntity) o;
+    return version.equals(that.version) &&
+        startDate.equals(that.startDate) &&
+        endDate.equals(that.endDate) &&
+        status == that.status;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(version, startDate, endDate, status);
   }
 
   public UUID getId() {
