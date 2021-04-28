@@ -1,13 +1,17 @@
-package com.group_3.kanbanboard.service;
+package com.group_3.kanbanboard.service.impl;
 
+import com.group_3.kanbanboard.entity.ProjectEntity;
 import com.group_3.kanbanboard.entity.ReleaseEntity;
 import com.group_3.kanbanboard.exception.ProjectNotFoundException;
 import com.group_3.kanbanboard.exception.ReleaseNotFoundException;
+import com.group_3.kanbanboard.mappers.ReleaseMapper;
 import com.group_3.kanbanboard.repository.ReleaseRepository;
 import com.group_3.kanbanboard.rest.dto.ReleaseRequestDto;
 import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
+import com.group_3.kanbanboard.service.ReleaseService;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,71 +20,60 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReleaseServiceImpl implements ReleaseService {
 
   private final ReleaseRepository releaseRepository;
-  //private final ProjectServiceImpl projectService;
-
-  @Autowired
-  public ReleaseServiceImpl(ReleaseRepository releaseRepository) {
-    this.releaseRepository = releaseRepository;
-  }
-
-  /*
-  !!! new constructor
+  private final ProjectServiceImpl projectService;
+  private final ReleaseMapper releaseMapper;
 
   @Autowired
   public ReleaseServiceImpl(ReleaseRepository releaseRepository,
-      ProjectServiceImpl projectService) {
+      ProjectServiceImpl projectService, ReleaseMapper releaseMapper) {
     this.releaseRepository = releaseRepository;
     this.projectService = projectService;
-  }*/
-
+    this.releaseMapper = releaseMapper;
+  }
 
   @Transactional
   @Override
   public ReleaseResponseDto getById(UUID id) throws ReleaseNotFoundException {
     ReleaseEntity release = releaseRepository.findById(id).orElseThrow(
         () -> new ReleaseNotFoundException("Release with ID = " + id + " was not found"));
-    //map release to dto response
-    return null;
+    return releaseMapper.toResponseDto(release);
   }
 
   @Transactional
   @Override
   public List<ReleaseResponseDto> getAllReleases() {
     List<ReleaseEntity> releases = releaseRepository.findAll();
-    //map release to dto response
-    return null;
+    return releases.stream().map(releaseMapper::toResponseDto).collect(Collectors.toList());
   }
 
   @Transactional
   @Override
-  public ReleaseResponseDto addRelease(UUID projectId, ReleaseRequestDto releaseRequestDto)
+  public ReleaseResponseDto addRelease(ReleaseRequestDto releaseRequestDto)
       throws ProjectNotFoundException {
-    // map request to entity;
-    // Release release = ....
+     ReleaseEntity release = releaseMapper.toEntity(releaseRequestDto);
 
-    // Project project = projectService.getById(projectId); MAP
-    // (map dtos or inject projectRepository right away with duplicating code);
+     //ProjectEntity project = projectService.getById(releaseRequestDto.getProjectId());
+     //map
 
-    // project.setReleases(project.getReleases().add(release));
-    // releaseRepository.save(release)
-    // projectService.updateProject(project)
+//     project.getReleases().add(release);
+//     releaseRepository.save(release);
+//     projectService.updateProject(project);
 
-    return null; //map release entity to response
+    return releaseMapper.toResponseDto(release);
   }
 
   @Transactional
   @Override
   public ReleaseResponseDto updateRelease(UUID id, ReleaseRequestDto releaseRequestDto)
       throws ReleaseNotFoundException {
-    //map request to entity;
-    ReleaseEntity releaseEntity = releaseRepository.findById(id).orElseThrow(
+    ReleaseEntity releaseEntityFromDb = releaseRepository.findById(id).orElseThrow(
         () -> new ReleaseNotFoundException("Release with ID = " + id + " was not found"));
-    releaseEntity.setStatus(releaseRequestDto.getStatus());
-    releaseEntity.setVersion(releaseRequestDto.getVersion());
+    releaseEntityFromDb.setStatus(releaseRequestDto.getStatus());
+    releaseEntityFromDb.setVersion(releaseRequestDto.getVersion());
     //maybe there's smth else we need to change
-    releaseRepository.save(releaseEntity);
+    releaseRepository.save(releaseEntityFromDb);
 
-    return null; //map to response
+    return releaseMapper.toResponseDto(releaseEntityFromDb);
   }
 
   @Transactional
