@@ -1,5 +1,6 @@
 package com.group_3.kanbanboard.service;
 
+import com.group_3.kanbanboard.enums.UserRole;
 import com.group_3.kanbanboard.rest.dto.ProjectRequestDto;
 import com.group_3.kanbanboard.rest.dto.ProjectResponseDto;
 
@@ -11,7 +12,7 @@ public interface ProjectService {
 
     List<ProjectResponseDto> getAllProjects();
 
-    ProjectResponseDto addProject(UUID userId, ProjectRequestDto projectRequestDto);
+    ProjectResponseDto addProject(UUID userId, ProjectRequestDto projectRequestDto, UserRole userRole);
 
     ProjectResponseDto updateProject(UUID id, ProjectRequestDto ProjectRequestDto);
 

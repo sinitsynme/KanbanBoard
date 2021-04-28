@@ -23,12 +23,11 @@ public class UserProjectEntity {
 
     @Column (name = "user_role")
     @Enumerated(value = EnumType.STRING)
-    private UserRole userRole;
+    private UserRole userRole = UserRole.NOT_ALLOWED;
 
-    public UserProjectEntity(UserEntity user, ProjectEntity project, UserRole userRole) {
+    public UserProjectEntity(UserEntity user, ProjectEntity project ) {
         this.user = user;
         this.project = project;
-        this.userRole = userRole;
         this.id = new UserProjectId(user.getId(), project.getId());
     }
 
