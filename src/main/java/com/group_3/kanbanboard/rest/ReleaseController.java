@@ -64,18 +64,17 @@ public class ReleaseController {
    * Create a release
    *
    * @param releaseRequestDto Release being added
-   * @param projectId         id of project to where release is being added
    * @return Added release
    * @throws ProjectNotFoundException throw if release with the same version already exists
    * @throws ReleaseNotFoundException throw if project with id doesn't exist
    */
   @Operation(summary = "Добавление релиза")
   @PostMapping
-  public ResponseEntity<ReleaseResponseDto> createRelease(UUID projectId,
+  public ResponseEntity<ReleaseResponseDto> createRelease(
       @RequestBody ReleaseRequestDto releaseRequestDto)
       throws ProjectNotFoundException, ReleaseNotFoundException {
 
-    return ResponseEntity.ok(releaseService.addRelease(projectId, releaseRequestDto));
+    return ResponseEntity.ok(releaseService.addRelease(releaseRequestDto));
   }
 
   /**

@@ -2,11 +2,13 @@ package com.group_3.kanbanboard.entity;
 
 import com.group_3.kanbanboard.enums.ReleaseStatus;
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,17 +31,19 @@ public class ReleaseEntity {
 
   private Date endDate;
 
-  @ManyToOne //......
-  private ProjectEntity project;
 
-  @OneToMany //......
-  private List<TaskEntity> tasks;
 
   @Enumerated(EnumType.STRING)
   private ReleaseStatus status;
 
   public ReleaseEntity() {
   }
+
+  @ManyToOne(fetch = FetchType.LAZY) //......
+  private ProjectEntity project;
+
+  @OneToMany(fetch = FetchType.LAZY) //......
+  private List<TaskEntity> tasks;
 
   public ReleaseEntity(UUID id, String version, Date startDate, Date endDate, ProjectEntity project,
       List<TaskEntity> tasks, ReleaseStatus status) {

@@ -56,11 +56,11 @@ public class ReleaseServiceImpl implements ReleaseService {
 
   @Transactional
   @Override
-  public ReleaseResponseDto addRelease(UUID projectId, ReleaseRequestDto releaseRequestDto)
+  public ReleaseResponseDto addRelease(ReleaseRequestDto releaseRequestDto)
       throws ProjectNotFoundException {
      ReleaseEntity release = releaseMapper.toEntity(releaseRequestDto);
 
-    // Project project = projectService.getById(projectId); MAP?
+    // Project project = projectService.getById(releaseRequestDto.getProjectId()); MAP?
     // (map dtos or inject projectRepository right away with duplicating code);
 
     // project.setReleases(project.getReleases().add(release));

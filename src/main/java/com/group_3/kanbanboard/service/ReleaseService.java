@@ -11,7 +11,7 @@ public interface ReleaseService {
 
   List<ReleaseResponseDto> getAllReleases();
 
-  ReleaseResponseDto addRelease(UUID projectId, ReleaseRequestDto releaseRequestDto);
+  ReleaseResponseDto addRelease(ReleaseRequestDto releaseRequestDto);
 
   ReleaseResponseDto updateRelease(UUID id, ReleaseRequestDto releaseRequestDto);
 
