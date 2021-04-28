@@ -1,8 +1,8 @@
 package com.group_3.kanbanboard.entity;
 
-<<<<<<< HEAD
+
 public class TaskEntity {
-=======
+
 import com.group_3.kanbanboard.enums.TaskCategory;
 import com.group_3.kanbanboard.enums.TaskStatus;
 
@@ -149,5 +149,5 @@ public class TaskEntity {
     public void setRelease(ReleaseEntity release) {
         this.release = release;
     }
->>>>>>> release_feature_develop
+
 }
