@@ -9,18 +9,18 @@ public class ProjectResponseDto {
     @Schema(description = "Описание проекта")
     private String description;
     @Schema(description = "Создатель проекта")
-    private Long lead_id;
+    private Long leadId;
     @Schema(description = "Старт проекта")
-    private Boolean is_started;
+    private Boolean startProject;
 
     public ProjectResponseDto() {
     }
 
-    public ProjectResponseDto(String title, String description, Long lead_id, Boolean is_started) {
+    public ProjectResponseDto(String title, String description, Long leadId, Boolean startProject) {
         this.title = title;
         this.description = description;
-        this.lead_id = lead_id;
-        this.is_started = is_started;
+        this.leadId = leadId;
+        this.startProject = startProject;
     }
 
     public String getTitle() {
@@ -39,19 +39,19 @@ public class ProjectResponseDto {
         this.description = description;
     }
 
-    public Long getLead_id() {
-        return lead_id;
+    public Long getLeadId() {
+        return leadId;
     }
 
-    public void setLead_id(Long lead_id) {
-        this.lead_id = lead_id;
+    public void setLeadId(Long leadId) {
+        this.leadId = leadId;
     }
 
-    public Boolean IsStarted() {
-        return is_started;
+    public Boolean isStartProject() {
+        return startProject;
     }
 
-    public void setStarted(Boolean is_started) {
-        this.is_started = is_started;
+    public void setStartProject(Boolean startProject) {
+        this.startProject = startProject;
     }
 }
