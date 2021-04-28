@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "release")
@@ -25,15 +26,16 @@ public class ReleaseEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
-  @Column
+  @Column(length = 30)
   private String version;
 
+  @Column
   private Date startDate;
 
+  @Column
   private Date endDate;
 
-
-
+  @Column
   @Enumerated(EnumType.STRING)
   private ReleaseStatus status;
 

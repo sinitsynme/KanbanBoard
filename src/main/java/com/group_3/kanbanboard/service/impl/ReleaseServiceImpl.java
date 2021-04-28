@@ -4,8 +4,10 @@ import com.group_3.kanbanboard.entity.ProjectEntity;
 import com.group_3.kanbanboard.entity.ReleaseEntity;
 import com.group_3.kanbanboard.exception.ProjectNotFoundException;
 import com.group_3.kanbanboard.exception.ReleaseNotFoundException;
+import com.group_3.kanbanboard.mappers.ProjectMapper;
 import com.group_3.kanbanboard.mappers.ReleaseMapper;
 import com.group_3.kanbanboard.repository.ReleaseRepository;
+import com.group_3.kanbanboard.rest.dto.ProjectResponseDto;
 import com.group_3.kanbanboard.rest.dto.ReleaseRequestDto;
 import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
 import com.group_3.kanbanboard.service.ReleaseService;
@@ -22,13 +24,15 @@ public class ReleaseServiceImpl implements ReleaseService {
   private final ReleaseRepository releaseRepository;
   private final ProjectServiceImpl projectService;
   private final ReleaseMapper releaseMapper;
+  private final ProjectMapper projectMapper;
 
   @Autowired
   public ReleaseServiceImpl(ReleaseRepository releaseRepository,
-      ProjectServiceImpl projectService, ReleaseMapper releaseMapper) {
+      ProjectServiceImpl projectService, ReleaseMapper releaseMapper, ProjectMapper projectMapper) {
     this.releaseRepository = releaseRepository;
     this.projectService = projectService;
     this.releaseMapper = releaseMapper;
+    this.projectMapper = projectMapper;
   }
 
   @Transactional
@@ -52,12 +56,12 @@ public class ReleaseServiceImpl implements ReleaseService {
       throws ProjectNotFoundException {
      ReleaseEntity release = releaseMapper.toEntity(releaseRequestDto);
 
-     //ProjectEntity project = projectService.getById(releaseRequestDto.getProjectId());
-     //map
+    ProjectResponseDto projectResponseDto = projectService.getById(releaseRequestDto.getProjectId());
+    ProjectEntity project = projectMapper.toEntity(projectResponseDto);
 
-//     project.getReleases().add(release);
-//     releaseRepository.save(release);
-//     projectService.updateProject(project);
+     project.getReleases().add(release);
+     //releaseRepository.save(release);
+     projectService.updateProject(project.getId(), projectMapper.toRequestDto(project));
 
     return releaseMapper.toResponseDto(release);
   }
