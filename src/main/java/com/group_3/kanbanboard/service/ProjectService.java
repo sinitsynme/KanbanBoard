@@ -11,9 +11,9 @@ public interface ProjectService {
 
     List<ProjectResponseDto> getAllProjects();
 
-    ProjectResponseDto addProject(ProjectRequestDto projectRequestDto);
+    ProjectResponseDto addProject(UUID userId, ProjectRequestDto projectRequestDto);
 
-    ProjectResponseDto updateUser(UUID id, ProjectRequestDto ProjectRequestDto);
+    ProjectResponseDto updateProject(UUID id, ProjectRequestDto ProjectRequestDto);
 
     void deleteProjectById(UUID id);
 

@@ -1,45 +1,58 @@
 package com.group_3.kanbanboard.rest;
 
+import com.group_3.kanbanboard.exception.ReleaseNotFoundException;
+import com.group_3.kanbanboard.repository.ProjectRepository;
 import com.group_3.kanbanboard.rest.dto.ProjectRequestDto;
 import com.group_3.kanbanboard.rest.dto.ProjectResponseDto;
+import com.group_3.kanbanboard.rest.dto.ReleaseRequestDto;
+import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
+import com.group_3.kanbanboard.service.impl.ProjectServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @Tag(name = "Проекты")
 @RequestMapping("/api/projects")
 @RestController
 public class ProjectController {
 
+    @Autowired
+    private ProjectServiceImpl projectService;
+
     @Operation(summary = "Добавить проект")
     @PostMapping
-    public ResponseEntity<ProjectResponseDto> addProject(@RequestBody ProjectRequestDto requestDto)  {
-        return ResponseEntity.ok().body(new ProjectResponseDto(requestDto.getTitle(), requestDto.getDescription(), requestDto.getLead_id(), requestDto.IsStarted()));
+    public ResponseEntity<ProjectResponseDto> addProject(UUID userId, @RequestBody ProjectRequestDto projectRequestDto)  {
+        return ResponseEntity.ok(projectService.addProject(userId, projectRequestDto));
     }
 
     @Operation(summary = "Получить список всех проектов")
-    @PostMapping
-    public ResponseEntity<ProjectResponseDto> getProjects()  {
-        return null;
+    @GetMapping
+    public ResponseEntity<List<ProjectResponseDto>> getAllProjects()  {
+        return ResponseEntity.ok().body(projectService.getAllProjects());
     }
 
     @Operation(summary = "Получение проекта по id")
     @GetMapping("/{id}")
-    public ResponseEntity<ProjectResponseDto> getProjectById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(new ProjectResponseDto());
+    public ResponseEntity<ProjectResponseDto> getProjectById(@PathVariable UUID id) {
+        return ResponseEntity.ok().body(projectService.getById(id));
     }
 
-    @Operation(summary = "Получение создателя проекта")
-    @GetMapping("/{id}")
-    public ResponseEntity<ProjectResponseDto> getLeadId(@PathVariable Long id) {
-        return ResponseEntity.ok().body(new ProjectResponseDto());
+    @Operation(summary = "Обновление проекта")
+    @PutMapping("/{id}")
+    public ResponseEntity<ProjectResponseDto> updateProject(@PathVariable UUID id,
+                                                            @RequestBody ProjectRequestDto projectRequestDto) {
+        return ResponseEntity.ok().body(projectService.updateProject(id, projectRequestDto));
     }
 
     @Operation(summary = "Удаление проекта")
     @DeleteMapping("/{id}")
-    public ResponseEntity<ProjectResponseDto> deleteProject(@PathVariable Long id)  {
-
+    public ResponseEntity<ProjectResponseDto> deleteProject(@PathVariable UUID id)  {
+        projectService.deleteProjectById(id);
         return ResponseEntity.ok().build();
     }
 
