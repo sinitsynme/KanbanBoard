@@ -1,11 +1,7 @@
 package com.group_3.kanbanboard.rest;
 
-import com.group_3.kanbanboard.exception.ReleaseNotFoundException;
-import com.group_3.kanbanboard.repository.ProjectRepository;
 import com.group_3.kanbanboard.rest.dto.ProjectRequestDto;
 import com.group_3.kanbanboard.rest.dto.ProjectResponseDto;
-import com.group_3.kanbanboard.rest.dto.ReleaseRequestDto;
-import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
 import com.group_3.kanbanboard.service.impl.ProjectServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
