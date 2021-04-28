@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -39,7 +40,8 @@ public class ReleaseEntity {
   public ReleaseEntity() {
   }
 
-  @ManyToOne(fetch = FetchType.LAZY) //......
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "project_id")
   private ProjectEntity project;
 
   @OneToMany(fetch = FetchType.LAZY) //......

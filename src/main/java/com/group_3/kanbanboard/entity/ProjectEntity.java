@@ -1,5 +1,6 @@
 package com.group_3.kanbanboard.entity;
 
+import java.util.List;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -28,8 +29,11 @@ public class ProjectEntity {
     )
     private List<UserProjectEntity> users = new ArrayList<>();
 
-    @OneToMany //......
-    private ReleaseEntity release;
+    @OneToMany(
+        mappedBy = "project",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    private List<ReleaseEntity> releases;
 
     public ProjectEntity() {
     }
@@ -88,12 +92,12 @@ public class ProjectEntity {
         this.users = users;
     }
 
-    public ReleaseEntity getRelease() {
-        return release;
+    public List<ReleaseEntity> getReleases() {
+        return releases;
     }
 
-    public void setRelease(ReleaseEntity release) {
-        this.release = release;
+    public void setReleases(List<ReleaseEntity> releases) {
+        this.releases = releases;
     }
 
 }
