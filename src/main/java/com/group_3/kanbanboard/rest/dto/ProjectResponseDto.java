@@ -2,6 +2,8 @@ package com.group_3.kanbanboard.rest.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.UUID;
+
 @Schema(description = "Проект")
 public class ProjectResponseDto {
     @Schema(description = "Название проекта")
@@ -9,14 +11,14 @@ public class ProjectResponseDto {
     @Schema(description = "Описание проекта")
     private String description;
     @Schema(description = "Создатель проекта")
-    private Long leadId;
+    private UUID leadId;
     @Schema(description = "Старт проекта")
     private Boolean startProject;
 
     public ProjectResponseDto() {
     }
 
-    public ProjectResponseDto(String title, String description, Long leadId, Boolean startProject) {
+    public ProjectResponseDto(String title, String description, UUID leadId, Boolean startProject) {
         this.title = title;
         this.description = description;
         this.leadId = leadId;
@@ -39,11 +41,11 @@ public class ProjectResponseDto {
         this.description = description;
     }
 
-    public Long getLeadId() {
+    public UUID getLeadId() {
         return leadId;
     }
 
-    public void setLeadId(Long leadId) {
+    public void setLeadId(UUID leadId) {
         this.leadId = leadId;
     }
 

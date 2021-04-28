@@ -1,5 +1,6 @@
 package com.group_3.kanbanboard.rest;
 
+import com.group_3.kanbanboard.enums.UserRole;
 import com.group_3.kanbanboard.rest.dto.ProjectRequestDto;
 import com.group_3.kanbanboard.rest.dto.ProjectResponseDto;
 import com.group_3.kanbanboard.service.impl.ProjectServiceImpl;
@@ -22,8 +23,8 @@ public class ProjectController {
 
     @Operation(summary = "Добавить проект")
     @PostMapping
-    public ResponseEntity<ProjectResponseDto> addProject(UUID userId, @RequestBody ProjectRequestDto projectRequestDto)  {
-        return ResponseEntity.ok(projectService.addProject(userId, projectRequestDto));
+    public ResponseEntity<ProjectResponseDto> addProject(UUID userId, @RequestBody ProjectRequestDto projectRequestDto, UserRole userRole)  {
+        return ResponseEntity.ok(projectService.addProject(userId, projectRequestDto, userRole));
     }
 
     @Operation(summary = "Получить список всех проектов")
