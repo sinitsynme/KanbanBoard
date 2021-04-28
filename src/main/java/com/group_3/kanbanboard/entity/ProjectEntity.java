@@ -16,6 +16,10 @@ public class ProjectEntity {
     private String title;
     @Column(name = "description")
     private String description;
+    @Column(name = "leadId")
+    private Long leadId;
+    @Column(name = "startProject")
+    private Boolean startProject;
 
     @OneToMany(
             mappedBy = "project",
@@ -60,6 +64,22 @@ public class ProjectEntity {
         this.description = description;
     }
 
+    public Long getLeadId() {
+        return leadId;
+    }
+
+    public void setLeadId(Long leadId) {
+        this.leadId = leadId;
+    }
+
+    public boolean isStartProject() {
+        return startProject;
+    }
+
+    public void setStartProject(boolean startProject) {
+        this.startProject = startProject;
+    }
+
     public List<UserProjectEntity> getUsers() {
         return users;
     }
@@ -75,4 +95,5 @@ public class ProjectEntity {
     public void setRelease(ReleaseEntity release) {
         this.release = release;
     }
+
 }
