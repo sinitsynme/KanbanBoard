@@ -13,13 +13,11 @@ import org.mapstruct.Mapper;
 public interface TaskMapper {
 
     public TaskRequestDto toRequestDto(TaskEntity entity);
-
     @InheritInverseConfiguration
     public TaskEntity toEntity(TaskRequestDto requestDto);
 
 
     public TaskResponseDto toResponseDto(TaskEntity entity);
-
     @InheritInverseConfiguration
     public TaskEntity toEntity(TaskResponseDto responseDto);
 }
