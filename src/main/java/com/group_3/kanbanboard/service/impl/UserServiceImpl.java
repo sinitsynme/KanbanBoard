@@ -2,6 +2,7 @@ package com.group_3.kanbanboard.service.impl;
 
 import com.group_3.kanbanboard.entity.UserEntity;
 import com.group_3.kanbanboard.exception.UserNotFoundException;
+import com.group_3.kanbanboard.mappers.UserMapper;
 import com.group_3.kanbanboard.repository.UserRepository;
 import com.group_3.kanbanboard.rest.dto.UserRequestDto;
 import com.group_3.kanbanboard.rest.dto.UserResponseDto;

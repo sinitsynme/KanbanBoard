@@ -1,16 +1,22 @@
 package com.group_3.kanbanboard.entity;
 
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table( name = "usr")
+
+
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column (name = "first_name")
+    @Column(name = "first_name")
     private String firstName;
     @Column (name = "second_name")
     private String secondName;
@@ -23,12 +29,12 @@ public class UserEntity {
     @Column (name = "role")
     private Enum role;
 
-//    @ManyToOne //......
-//    private TaskEntity tasks;
-
-//    @OneToMany //......
-//    private List<ProjectEntity> project;
-
+    @OneToMany(
+            mappedBy = "usr",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<UserProjectEntity> users = new ArrayList<>();
 
     public UserEntity() {
     }
@@ -41,6 +47,18 @@ public class UserEntity {
         this.password = password;
         this.mail = mail;
         this.role = role;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity usr = (UserEntity) o;
+        return Objects.equals(firstName, usr.firstName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName);
     }
 
 
