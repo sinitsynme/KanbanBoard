@@ -23,7 +23,7 @@
         <constraints nullable="false"/>
       </column>
       <column name="project_id" type="uuid">
-<!--        <constraints></constraints>-->
+        <constraints nullable="false" foreignKeyName="FK-release-project_id-project-id" references="project(id)"/>
       </column>
 
     </createTable>

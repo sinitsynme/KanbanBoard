@@ -26,10 +26,10 @@
         <constraints nullable="false"/>
       </column>
       <column name="release_id" type="uuid">
-<!--        <constraints></constraints>-->
+        <constraints nullable="false" foreignKeyName="FK-task-release_id-release-id" references="release(id)"/>
       </column>
       <column name="performer_id" type="uuid">
-        <!--        <constraints></constraints>-->
+        <constraints nullable="false" foreignKeyName="FK-task-performer_id-user-id" references="user(id)"/>
       </column>
 
     </createTable>
