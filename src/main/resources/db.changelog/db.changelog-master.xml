@@ -9,8 +9,14 @@
     <dbms type="postgres"/>
   </preConditions>
   
-  <changeSet id="000" author="Maxim Sinitsyn">
-    <
+  <changeSet id="0001" author="Maxim Sinitsyn">
+    <tagDatabase tag="db_init"/>
+  </changeSet>
+
+  <include file="migrations/v1.0/db.changelog-v1.0.xml" relativeToChangelogFile="true"/>
+
+  <changeSet id="0002" author="Maxim Sinitsyn, Alexander Grishin">
+    <tagDatabase tag="v1.0"/>
   </changeSet>
 
 </databaseChangeLog>

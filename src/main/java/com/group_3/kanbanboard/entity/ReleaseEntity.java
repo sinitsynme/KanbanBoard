@@ -1,8 +1,7 @@
 package com.group_3.kanbanboard.entity;
 
 import com.group_3.kanbanboard.enums.ReleaseStatus;
-import freemarker.ext.beans.TemplateAccessible;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -58,7 +57,7 @@ public class ReleaseEntity {
   }
 
   public ReleaseEntity(UUID id, String version, Date startDate, Date endDate, ProjectEntity project,
-       ReleaseStatus status) {
+      ReleaseStatus status) {
     this.id = id;
     this.version = version;
     this.startDate = startDate;
@@ -78,13 +77,12 @@ public class ReleaseEntity {
     ReleaseEntity that = (ReleaseEntity) o;
     return version.equals(that.version) &&
         startDate.equals(that.startDate) &&
-        endDate.equals(that.endDate) &&
-        status == that.status;
+        endDate.equals(that.endDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(version, startDate, endDate, status);
+    return Objects.hash(version, startDate, endDate);
   }
 
   public UUID getId() {
