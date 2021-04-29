@@ -8,17 +8,14 @@ public class UserRequestDto {
     private String firstName;
     @Schema(description = "Фамилия пользователя")
     private String secondName;
-    @Schema(description = "id пользователя")
-    private Long user_id;
     @Schema(description = "E-mail")
     private String mail;
     @Schema(description = "Роль")
     private String role;
 
-    public UserRequestDto(String firstName, String secondName, Long user_id, String mail, String role) {
+    public UserRequestDto(String firstName, String secondName, String mail, String role) {
         this.firstName = firstName;
         this.secondName = secondName;
-        this.user_id = user_id;
         this.mail = mail;
         this.role = role;
     }
@@ -37,14 +34,6 @@ public class UserRequestDto {
 
     public void setSecondName(String secondName) {
         this.secondName = secondName;
-    }
-
-    public Long getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
     }
 
     public String getMail() {

@@ -1,5 +1,6 @@
 package com.group_3.kanbanboard.entity;
 
+import com.group_3.kanbanboard.enums.UserRole;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table( name = "usr")
+@Table(name = "usr")
 
 
 public class UserEntity {
@@ -18,19 +19,19 @@ public class UserEntity {
 
     @Column(name = "first_name")
     private String firstName;
-    @Column (name = "second_name")
+    @Column(name = "second_name")
     private String secondName;
-    @Column (name = "login")
+    @Column(name = "login")
     private String login;
-    @Column (name = "password")
+    @Column(name = "password")
     private String password;
-    @Column (name = "mail")
+    @Column(name = "mail")
     private String mail;
-    @Column (name = "role")
-    private Enum role;
+    @Column(name = "role")
+    private UserRole role;
 
     @OneToMany(
-            mappedBy = "usr",
+            mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
@@ -39,7 +40,7 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(UUID id, String firstName, String secondName, String login, String password, String mail, Enum role) {
+    public UserEntity(UUID id, String firstName, String secondName, String login, String password, String mail, UserRole role) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -48,6 +49,7 @@ public class UserEntity {
         this.mail = mail;
         this.role = role;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,11 +112,11 @@ public class UserEntity {
         this.mail = mail;
     }
 
-    public Enum getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(Enum role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 }
