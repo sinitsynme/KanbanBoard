@@ -30,9 +30,9 @@ public class ProjectEntity {
     private List<UserProjectEntity> users = new ArrayList<>();
 
     @OneToMany(
-        mappedBy = "project",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true)
+            mappedBy = "project",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<ReleaseEntity> releases;
 
     public ProjectEntity() {
