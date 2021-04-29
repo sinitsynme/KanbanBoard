@@ -21,7 +21,7 @@ public class UserProjectEntity {
     @MapsId("projectId")
     private ProjectEntity project;
 
-    @Column (name = "user_role")
+    @Column (name = "user_role", nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRole userRole = UserRole.NOT_ALLOWED;
 

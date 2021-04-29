@@ -28,6 +28,7 @@ public class UserEntity {
     @Column(name = "mail")
     private String mail;
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     @OneToMany(

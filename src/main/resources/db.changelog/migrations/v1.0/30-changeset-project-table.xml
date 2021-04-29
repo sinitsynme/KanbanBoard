@@ -20,6 +20,9 @@
         <constraints nullable="false"/>
       </column>
 
+      <column name="lead_id" type="uuid">
+      </column>
+
     </createTable>
   </changeSet>
 

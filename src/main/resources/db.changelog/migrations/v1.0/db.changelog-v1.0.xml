@@ -11,8 +11,6 @@
   <include file="10-changeset-task-table.xml" relativeToChangelogFile="true"/>
 
   <include file="40-changeset-user-project-table.xml" relativeToChangelogFile="true"/>
-  <include file="41-changeset-user-project-table_add_composite_key.xml" relativeToChangelogFile="true"/>
-  <include file="50-changeset-project-foreign_key_column_user-project.xml" relativeToChangelogFile="true"/>
-  <include file="60-changeset-user-foreign_key_column_user-project.xml" relativeToChangelogFile="true"/>
+
 
 </databaseChangeLog>
