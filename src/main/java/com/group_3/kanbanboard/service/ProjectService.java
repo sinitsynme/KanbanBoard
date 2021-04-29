@@ -12,7 +12,7 @@ public interface ProjectService {
 
     List<ProjectResponseDto> getAllProjects();
 
-    ProjectResponseDto addProject(UUID userId, ProjectRequestDto projectRequestDto, UserRole userRole);
+    ProjectResponseDto addProject(UUID userId, ProjectRequestDto projectRequestDto);
 
     ProjectResponseDto updateProject(UUID id, ProjectRequestDto ProjectRequestDto);
 

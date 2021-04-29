@@ -8,8 +8,7 @@ import java.util.UUID;
 public class ProjectRequestDto {
     @Schema(description = "Название проекта")
     private String title;
-    @Schema(description = "id проекта")
-    private Long projectId;
+
     @Schema(description = "Описание проекта")
     private String description;
     @Schema(description = "Создатель проекта")
@@ -17,9 +16,8 @@ public class ProjectRequestDto {
     @Schema(description = "Старт проекта")
     private Boolean startProject;
 
-    public ProjectRequestDto(String title, Long projectId, String description, UUID leadId, Boolean startProject) {
+    public ProjectRequestDto(String title, String description, UUID leadId, Boolean startProject) {
         this.title = title;
-        this.projectId = projectId;
         this.description = description;
         this.leadId = leadId;
         this.startProject = startProject;
@@ -31,14 +29,6 @@ public class ProjectRequestDto {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Long getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
     }
 
     public String getDescription() {
