@@ -56,11 +56,11 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Transactional
     @Override
-    public ProjectResponseDto addProject(UUID userId, ProjectRequestDto projectRequestDto, UserRole userRole) {
+    public ProjectResponseDto addProject(UUID userId, ProjectRequestDto projectRequestDto) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException("User with ID = " + userId + " was not found"));
         ProjectEntity project = projectMapper.toEntity(projectRequestDto);
-        UserProjectEntity userProjectEntity = new UserProjectEntity(userEntity, project, userRole);
+        UserProjectEntity userProjectEntity = new UserProjectEntity(userEntity, project);
         projectRepository.save(project);
         userProjectRepository.save(userProjectEntity);
         return projectMapper.toResponseDto(project);
