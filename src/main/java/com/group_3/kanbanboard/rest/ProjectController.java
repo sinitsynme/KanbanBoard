@@ -23,7 +23,7 @@ public class ProjectController {
 
     @Operation(summary = "Добавить проект")
     @PostMapping
-    public ResponseEntity<ProjectResponseDto> addProject(UUID userId, @RequestBody ProjectRequestDto projectRequestDto, UserRole userRole)  {
+    public ResponseEntity<ProjectResponseDto> addProject(UUID userId, @RequestBody ProjectRequestDto projectRequestDto)  {
         return ResponseEntity.ok(projectService.addProject(userId, projectRequestDto));
     }
 
