@@ -6,7 +6,7 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
   <preConditions>
-    <dbms type="postgres"/>
+    <dbms type="postgresql"/>
   </preConditions>
   
   <changeSet id="0001" author="Maxim Sinitsyn">
