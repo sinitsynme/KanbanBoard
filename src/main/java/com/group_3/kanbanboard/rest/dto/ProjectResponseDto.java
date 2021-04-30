@@ -2,6 +2,8 @@ package com.group_3.kanbanboard.rest.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.UUID;
+
 @Schema(description = "Проект")
 public class ProjectResponseDto {
     @Schema(description = "Название проекта")
@@ -9,18 +11,18 @@ public class ProjectResponseDto {
     @Schema(description = "Описание проекта")
     private String description;
     @Schema(description = "Создатель проекта")
-    private Long lead_id;
+    private UUID leadId;
     @Schema(description = "Старт проекта")
-    private Boolean is_started;
+    private Boolean startProject;
 
     public ProjectResponseDto() {
     }
 
-    public ProjectResponseDto(String title, String description, Long lead_id, Boolean is_started) {
+    public ProjectResponseDto(String title, String description, UUID leadId, Boolean startProject) {
         this.title = title;
         this.description = description;
-        this.lead_id = lead_id;
-        this.is_started = is_started;
+        this.leadId = leadId;
+        this.startProject = startProject;
     }
 
     public String getTitle() {
@@ -39,19 +41,19 @@ public class ProjectResponseDto {
         this.description = description;
     }
 
-    public Long getLead_id() {
-        return lead_id;
+    public UUID getLeadId() {
+        return leadId;
     }
 
-    public void setLead_id(Long lead_id) {
-        this.lead_id = lead_id;
+    public void setLeadId(UUID leadId) {
+        this.leadId = leadId;
     }
 
-    public Boolean IsStarted() {
-        return is_started;
+    public Boolean isStartProject() {
+        return startProject;
     }
 
-    public void setStarted(Boolean is_started) {
-        this.is_started = is_started;
+    public void setStartProject(Boolean startProject) {
+        this.startProject = startProject;
     }
 }

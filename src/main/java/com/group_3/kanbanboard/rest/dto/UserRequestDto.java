@@ -5,35 +5,35 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "Пользователь")
 public class UserRequestDto {
     @Schema(description = "Имя пользователя")
-    private String name;
-    @Schema(description = "id пользователя")
-    private Long user_id;
+    private String firstName;
+    @Schema(description = "Фамилия пользователя")
+    private String secondName;
     @Schema(description = "E-mail")
     private String mail;
     @Schema(description = "Роль")
     private String role;
 
-    public UserRequestDto(String name, Long user_id, String mail, String role) {
-        this.name = name;
-        this.user_id = user_id;
+    public UserRequestDto(String firstName, String secondName, String mail, String role) {
+        this.firstName = firstName;
+        this.secondName = secondName;
         this.mail = mail;
         this.role = role;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public String getSecondName() {
+        return secondName;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
     public String getMail() {
