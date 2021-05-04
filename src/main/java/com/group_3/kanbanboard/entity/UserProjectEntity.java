@@ -1,6 +1,7 @@
 package com.group_3.kanbanboard.entity;
 
 
+import com.group_3.kanbanboard.enums.InProjectUserRole;
 import com.group_3.kanbanboard.enums.UserRole;
 
 import javax.persistence.*;
@@ -23,7 +24,7 @@ public class UserProjectEntity {
 
     @Column (name = "user_role", nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private UserRole userRole = UserRole.NOT_ALLOWED;
+    private InProjectUserRole projectUserRole = InProjectUserRole.NOT_ALLOWED;
 
     public UserProjectEntity(UserEntity user, ProjectEntity project ) {
         this.user = user;
@@ -72,11 +73,11 @@ public class UserProjectEntity {
         this.project = project;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
+    public InProjectUserRole getProjectUserRole() {
+        return projectUserRole;
     }
 
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
+    public void setProjectUserRole(InProjectUserRole userRole) {
+        this.projectUserRole = userRole;
     }
 }
