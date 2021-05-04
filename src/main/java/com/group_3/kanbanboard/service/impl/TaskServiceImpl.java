@@ -1,13 +1,10 @@
 package com.group_3.kanbanboard.service.impl;
 
-import com.group_3.kanbanboard.entity.ProjectEntity;
 import com.group_3.kanbanboard.entity.ReleaseEntity;
 import com.group_3.kanbanboard.entity.TaskEntity;
-import com.group_3.kanbanboard.exception.ProjectNotFoundException;
 import com.group_3.kanbanboard.exception.ReleaseNotFoundException;
 import com.group_3.kanbanboard.exception.TaskNotFoundException;
 import com.group_3.kanbanboard.mappers.TaskMapper;
-import com.group_3.kanbanboard.repository.ProjectRepository;
 import com.group_3.kanbanboard.repository.ReleaseRepository;
 import com.group_3.kanbanboard.repository.TaskRepository;
 import com.group_3.kanbanboard.rest.dto.TaskRequestDto;
@@ -23,12 +20,16 @@ import java.util.stream.Collectors;
 
 public class TaskServiceImpl implements TaskService {
 
-    @Autowired
-    TaskRepository taskRepository;
-    @Autowired
-    ReleaseRepository releaseRepository;
-    @Autowired
-    TaskMapper taskMapper;
+   private final TaskRepository taskRepository;
+   private final ReleaseRepository releaseRepository;
+   private final TaskMapper taskMapper;
+
+   @Autowired
+    public TaskServiceImpl(TaskRepository taskRepository, ReleaseRepository releaseRepository, TaskMapper taskMapper) {
+        this.taskRepository = taskRepository;
+        this.releaseRepository = releaseRepository;
+        this.taskMapper = taskMapper;
+    }
 
     @Transactional
     @Override
