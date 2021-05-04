@@ -1,6 +1,8 @@
 package com.group_3.kanbanboard.rest.dto;
 
+import com.group_3.kanbanboard.enums.UserRole;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.Set;
 
 @Schema(description = "Пользователь")
 public class UserResponseDto {
@@ -11,16 +13,17 @@ public class UserResponseDto {
     @Schema(description = "E-mail")
     private String mail;
     @Schema(description = "Роль")
-    private String role;
+    private Set<UserRole> roles;
 
     public UserResponseDto() {
     }
 
-    public UserResponseDto(String firstName, String secondName, String mail, String role) {
+    public UserResponseDto(String firstName, String secondName, String mail,
+        Set<UserRole> roles) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.mail = mail;
-        this.role = role;
+        this.roles = roles;
     }
 
     public String getFirstName() {
@@ -47,11 +50,11 @@ public class UserResponseDto {
         this.mail = mail;
     }
 
-    public String getRole() {
-        return role;
+    public Set<UserRole> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(Set<UserRole> roles) {
+        this.roles = roles;
     }
 }

@@ -2,6 +2,7 @@ package com.group_3.kanbanboard.entity;
 
 import com.group_3.kanbanboard.enums.UserRole;
 
+import java.util.Set;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Table(name = "usr")
 
 
-public class UserEntity {
+public class UserEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -21,15 +22,17 @@ public class UserEntity {
     private String firstName;
     @Column(name = "second_name")
     private String secondName;
-    @Column(name = "login")
-    private String login;
+    @Column(name = "username")
+    private String username;
     @Column(name = "password")
     private String password;
     @Column(name = "mail")
     private String mail;
-    @Column(name = "role")
+
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    @CollectionTable(joinColumns = @JoinColumn(name = "user_id"))
+    private Set<UserRole> roles;
 
     @OneToMany(
             mappedBy = "user",
@@ -41,14 +44,15 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(UUID id, String firstName, String secondName, String login, String password, String mail, UserRole role) {
+    public UserEntity(UUID id, String firstName, String secondName, String username,
+        String password, String mail, Set<UserRole> roles) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
-        this.login = login;
+        this.username = username;
         this.password = password;
         this.mail = mail;
-        this.role = role;
+        this.roles = roles;
     }
 
     @Override
@@ -89,12 +93,12 @@ public class UserEntity {
         this.secondName = secondName;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -113,11 +117,11 @@ public class UserEntity {
         this.mail = mail;
     }
 
-    public UserRole getRole() {
-        return role;
+    public Set<UserRole> getRoles() {
+        return roles;
     }
 
-    public void setRole(UserRole role) {
-        this.role = role;
+    public void setRole(Set<UserRole> roles) {
+        this.roles = roles;
     }
 }
