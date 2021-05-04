@@ -14,10 +14,5 @@ import java.util.List;
 public class MainUserController {
 
 
-    @GetMapping("/xxx")
-    public String getUsers() {
-
-    }
-
 
 }
