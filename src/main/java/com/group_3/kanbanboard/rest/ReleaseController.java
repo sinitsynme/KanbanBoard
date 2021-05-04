@@ -1,7 +1,5 @@
 package com.group_3.kanbanboard.rest;
 
-import com.group_3.kanbanboard.exception.ProjectNotFoundException;
-import com.group_3.kanbanboard.exception.ReleaseNotFoundException;
 import com.group_3.kanbanboard.rest.dto.ReleaseRequestDto;
 import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
 import com.group_3.kanbanboard.service.impl.ReleaseServiceImpl;
@@ -46,11 +44,12 @@ public class ReleaseController {
 
   /**
    * Get all releases
+   *
    * @return List of all releases
    */
   @Operation(summary = "Получить все релизы")
   @GetMapping
-  public ResponseEntity<List<ReleaseResponseDto>> getAllReleases(){
+  public ResponseEntity<List<ReleaseResponseDto>> getAllReleases() {
     return ResponseEntity.ok().body(releaseService.getAllReleases());
   }
 
@@ -78,7 +77,7 @@ public class ReleaseController {
   @Operation(summary = "Обновление релиза")
   @PutMapping("/{id}")
   public ResponseEntity<ReleaseResponseDto> updateRelease(@PathVariable UUID id,
-      @RequestBody ReleaseRequestDto releaseRequestDto){
+      @RequestBody ReleaseRequestDto releaseRequestDto) {
 
     return ResponseEntity.ok().body(releaseService.updateRelease(id, releaseRequestDto));
   }
