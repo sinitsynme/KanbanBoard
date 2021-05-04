@@ -8,14 +8,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Schema(description = "задача")
 @RequestMapping("api/tasks")
 @RestController
 public class TaskController {
-    @Operation(summary = "получить список всех задач")
+    @Operation(summary = "Получить список всех задач")
     @GetMapping()
-    public ResponseEntity<List<TaskResponseDto>> getTasks() {
+    public ResponseEntity<List<TaskResponseDto>> getAllTasks() {
         return null;
     }
 
@@ -27,19 +28,19 @@ public class TaskController {
 
     @Operation(summary = "Удалить задачу")
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteTask(@PathVariable Long id) {
+    public ResponseEntity<TaskResponseDto> deleteTask(@PathVariable UUID id) {
         return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "получить задачу по id")
     @GetMapping("/{id}")
-    public ResponseEntity<TaskResponseDto> getTaskById(@PathVariable Long id) {
+    public ResponseEntity<TaskResponseDto> getTaskById(@PathVariable UUID id) {
         return ResponseEntity.ok().body(new TaskResponseDto());
     }
 
     @Operation(summary = "обновить задачу")
     @PutMapping("/{id}")
-    public ResponseEntity<TaskResponseDto> updateTask(@PathVariable Long id, @RequestBody TaskRequestDto requestDto) {
+    public ResponseEntity<TaskResponseDto> updateTask(@PathVariable UUID id, @RequestBody TaskRequestDto requestDto) {
         return ResponseEntity.ok().body(new TaskResponseDto());
     }
 }

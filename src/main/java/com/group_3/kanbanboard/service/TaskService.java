@@ -12,7 +12,7 @@ public interface TaskService {
 
     List<TaskResponseDto> getAllTasks();
 
-    TaskResponseDto addTask(UUID projectId, TaskRequestDto taskRequestDto);
+    TaskResponseDto addTask(TaskRequestDto taskRequestDto);
 
     TaskResponseDto updateTask(UUID id, TaskRequestDto taskRequestDto);
 
