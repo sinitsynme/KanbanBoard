@@ -52,7 +52,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     @Override
-    public TaskResponseDto updateTask(UUID id, TaskRequestDto taskRequestDto) throws TaskNotFoundException {
+    public TaskResponseDto updateTask(UUID id, TaskRequestDto taskRequestDto) {
         TaskEntity taskFromDb = taskRepository.findById(id).orElseThrow(
                 () -> new TaskNotFoundException("Task with ID = " + id + " not found"));
 
@@ -66,7 +66,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     @Override
-    public void deleteTask(UUID id) throws TaskNotFoundException {
+    public void deleteTask(UUID id) {
         if (!taskRepository.existsById(id)) throw new TaskNotFoundException("Task with ID = " + id + " not found");
 
         taskRepository.deleteById(id);
