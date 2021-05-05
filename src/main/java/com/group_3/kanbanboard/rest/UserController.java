@@ -20,9 +20,9 @@ public class UserController {
     @Operation(summary = "Получить список пользователей")
     @GetMapping(value = "/users")
     public ResponseEntity<List<UserResponseDto>> getUsers() {
-        UserResponseDto usr = new UserResponseDto("Ivan","Ivanov", "ivan@soap.com", "developer");
-        UserResponseDto usr1 = new UserResponseDto("Ivan","Ivanov", "ivan@soap.com", "developer");
-        UserResponseDto usr2 = new UserResponseDto("Ivan","Ivanov", "ivan@soap.com", "developer");
+        UserResponseDto usr = new UserResponseDto("Ivan", "Ivanov", "ivan@soap.com", "developer");
+        UserResponseDto usr1 = new UserResponseDto("Ivan", "Ivanov", "ivan@soap.com", "developer");
+        UserResponseDto usr2 = new UserResponseDto("Ivan", "Ivanov", "ivan@soap.com", "developer");
         List<UserResponseDto> results = Arrays.asList(usr, usr1, usr2);
         return ResponseEntity.ok().body(results);
     }

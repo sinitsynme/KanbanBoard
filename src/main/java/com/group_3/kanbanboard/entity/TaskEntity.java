@@ -36,7 +36,7 @@ public class TaskEntity {
     private TaskStatus taskStatus;
 
     @ManyToOne
-    private UserEntity user;
+    private UserEntity performer;
 
     @ManyToOne
     private ProjectEntity project;
@@ -49,14 +49,14 @@ public class TaskEntity {
 
     public TaskEntity(UUID id, String title, String description, Date endDate,
                       TaskCategory taskCategory, TaskStatus taskStatus,
-                      UserEntity user, ProjectEntity project, ReleaseEntity release) {
+                      UserEntity performer, ProjectEntity project, ReleaseEntity release) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.endDate = endDate;
         this.taskCategory = taskCategory;
         this.taskStatus = taskStatus;
-        this.user = user;
+        this.performer = performer;
         this.project = project;
         this.release = release;
     }
@@ -124,12 +124,12 @@ public class TaskEntity {
         this.taskStatus = taskStatus;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public UserEntity getPerformer() {
+        return performer;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setPerformer(UserEntity user) {
+        this.performer = user;
     }
 
     public ProjectEntity getProject() {

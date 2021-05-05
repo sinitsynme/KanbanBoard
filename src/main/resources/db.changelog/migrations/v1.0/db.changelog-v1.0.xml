@@ -5,13 +5,12 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-  <include file="01-changeset-release-table.xml" relativeToChangelogFile="true"/>
-  <include file="10-changeset-task-table.xml" relativeToChangelogFile="true"/>
   <include file="20-changeset-usr-table.xml" relativeToChangelogFile="true"/>
   <include file="30-changeset-project-table.xml" relativeToChangelogFile="true"/>
+  <include file="01-changeset-release-table.xml" relativeToChangelogFile="true"/>
+  <include file="10-changeset-task-table.xml" relativeToChangelogFile="true"/>
+
   <include file="40-changeset-user-project-table.xml" relativeToChangelogFile="true"/>
-  <include file="41-changeset-user-project-table_add_composite_key.xml" relativeToChangelogFile="true"/>
-  <include file="50-changeset-project-foreign_key_column_user-project.xml" relativeToChangelogFile="true"/>
-  <include file="60-changeset-user-foreign_key_column_user-project.xml" relativeToChangelogFile="true"/>
+
 
 </databaseChangeLog>
