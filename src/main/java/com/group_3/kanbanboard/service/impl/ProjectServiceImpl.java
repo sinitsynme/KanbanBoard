@@ -43,7 +43,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponseDto getById(UUID id) {
         ProjectEntity project = projectRepository.findById(id).orElseThrow(
-                () -> new ProjectNotFoundException("Project with ID = " + id + " was not found"));
+                () -> new ProjectNotFoundException(String.format("Project with ID = %s was not found", id)));
         return projectMapper.toResponseDto(project);
     }
 
@@ -58,7 +58,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponseDto addProject(UUID userId, ProjectRequestDto projectRequestDto) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(
-                () -> new UserNotFoundException("User with ID = " + userId + " was not found"));
+                () -> new UserNotFoundException(String.format("User with ID = %s was not found", userId)));
         ProjectEntity project = projectMapper.toEntity(projectRequestDto);
         UserProjectEntity userProjectEntity = new UserProjectEntity(userEntity, project);
         projectRepository.save(project);
@@ -70,7 +70,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponseDto updateProject(UUID id, ProjectRequestDto projectRequestDto) {
         ProjectEntity projectEntityFromDb = projectRepository.findById(id).orElseThrow(
-                () -> new ProjectNotFoundException("Project with ID = " + id + " was not found"));
+                () -> new ProjectNotFoundException(String.format("Project with ID = %s was not found", id)));
         projectEntityFromDb.setTitle(projectRequestDto.getTitle());
         projectEntityFromDb.setDescription(projectRequestDto.getDescription());
         projectRepository.save(projectEntityFromDb);
@@ -81,7 +81,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void deleteProjectById(UUID id) {
         if (!projectRepository.existsById(id)) {
-            throw new ProjectNotFoundException("Project with ID = " + id + " was not found");
+            throw new ProjectNotFoundException(String.format("Project with ID = %s was not found", id));
         }
         projectRepository.deleteById(id);
     }
