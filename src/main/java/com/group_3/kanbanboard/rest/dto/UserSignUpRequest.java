@@ -30,12 +30,12 @@ public class UserSignUpRequest {
     @NotBlank
     private String confirmPassword;
 
-    public UserSignUpRequest(@NotBlank @Size(min = 3, max = 15, message = "Invalid first name") String firstName,
-                             @NotBlank @Size(min = 5, max = 25, message = "Invalid last name") String lastName,
-                             @NotBlank @Size(min = 5, max = 25, message = "Invalid last name") String userName,
-                             @NotBlank @Email String email,
-                             @NotBlank @Size(max = 50, min = 8, message = "Invalid password") String password,
-                             @NotBlank String confirmPassword) {
+    public UserSignUpRequest(String firstName,
+                             String lastName,
+                             String userName,
+                             String email,
+                             String password,
+                             String confirmPassword) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
