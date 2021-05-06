@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
     UserEntity userEntity = new UserEntity();
     userEntity.setUsername("admin");
     userEntity.setPassword("$2y$08$gFrPon1/FCbSEWFYPXMtX.yBDltLs4WbdLad3MFzQHmqmHfkM6mia");
-    userEntity.setRoles(Collections.singleton(UserRole.LEAD));
+    userEntity.setRoles(Collections.singleton(UserRole.ADMIN));
     userRepository.save(userEntity);
   }
 }
