@@ -1,15 +1,18 @@
 package com.group_3.kanbanboard.controller;
 
+import com.group_3.kanbanboard.entity.UserEntity;
 import com.group_3.kanbanboard.rest.dto.UserRequestDto;
 import com.group_3.kanbanboard.rest.dto.UserResponseDto;
 import com.group_3.kanbanboard.service.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -39,6 +42,11 @@ public class MainUserController {
        model.addAttribute("userDto", userDto);
        return "userDetail";
 
+    }
+
+    @GetMapping("/addAdmin")
+    public void addAdmin(){
+        userService.addAdmin();
     }
 
 
