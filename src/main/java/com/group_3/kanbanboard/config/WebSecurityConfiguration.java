@@ -30,6 +30,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     return new BCryptPasswordEncoder(8);
   }
 
+
+  //ADD ADMIN - TEMPORARY
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests().antMatchers("/", "/static/**", "/registration", "/users/addAdmin").permitAll()
