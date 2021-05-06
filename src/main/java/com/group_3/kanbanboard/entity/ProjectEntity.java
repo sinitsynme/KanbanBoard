@@ -17,9 +17,9 @@ public class ProjectEntity {
     private String title;
     @Column
     private String description;
-    @Column
+    @Column(name = "lead_id")
     private UUID leadId;
-    @Column
+    @Column(name = "start_project")
     private Boolean startProject;
 
     @OneToMany(

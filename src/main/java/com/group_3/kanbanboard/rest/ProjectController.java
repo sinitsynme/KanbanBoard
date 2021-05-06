@@ -23,7 +23,7 @@ public class ProjectController {
 
     @Operation(summary = "Добавить проект")
     @PostMapping
-    public ResponseEntity<ProjectResponseDto> addProject(UUID userId, @RequestBody ProjectRequestDto projectRequestDto, UserRole userRole)  {
+    public ResponseEntity<ProjectResponseDto> addProject(@PathVariable UUID userId, @RequestBody ProjectRequestDto projectRequestDto)  {
         return ResponseEntity.ok(projectService.addProject(userId, projectRequestDto));
     }
 
@@ -48,7 +48,7 @@ public class ProjectController {
 
     @Operation(summary = "Удаление проекта")
     @DeleteMapping("/{id}")
-    public ResponseEntity<ProjectResponseDto> deleteProject(@PathVariable UUID id)  {
+    public ResponseEntity<?> deleteProject(@PathVariable UUID id)  {
         projectService.deleteProjectById(id);
         return ResponseEntity.ok().build();
     }
