@@ -2,16 +2,19 @@ package com.group_3.kanbanboard.entity;
 
 import com.group_3.kanbanboard.enums.UserRole;
 
+import java.util.Collection;
 import java.util.Set;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "usr")
-public class UserEntity extends AbstractUser{
+public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -40,6 +43,12 @@ public class UserEntity extends AbstractUser{
     private List<UserProjectEntity> users = new ArrayList<>();
 
     public UserEntity() {
+    }
+
+    public UserEntity(String username, String password, Set<UserRole> roles) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
     }
 
     public UserEntity(UUID id, String firstName, String secondName, String username,
@@ -121,5 +130,30 @@ public class UserEntity extends AbstractUser{
 
     public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
