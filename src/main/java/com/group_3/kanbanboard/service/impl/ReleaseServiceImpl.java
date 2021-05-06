@@ -37,9 +37,9 @@ public class ReleaseServiceImpl implements ReleaseService {
 
   @Transactional
   @Override
-  public ReleaseResponseDto getById(UUID id) throws ReleaseNotFoundException {
+  public ReleaseResponseDto getById(UUID id) {
     ReleaseEntity release = releaseRepository.findById(id).orElseThrow(
-        () -> new ReleaseNotFoundException("Release with ID = " + id + " was not found"));
+        () -> new ReleaseNotFoundException(String.format("Release with ID = %s was not found", id)));
     return releaseMapper.toResponseDto(release);
   }
 
@@ -52,8 +52,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 
   @Transactional
   @Override
-  public ReleaseResponseDto addRelease(ReleaseRequestDto releaseRequestDto)
-      throws ProjectNotFoundException {
+  public ReleaseResponseDto addRelease(ReleaseRequestDto releaseRequestDto) {
      ReleaseEntity release = releaseMapper.toEntity(releaseRequestDto);
 
     ProjectResponseDto projectResponseDto = projectService.getById(releaseRequestDto.getProjectId());
@@ -68,10 +67,9 @@ public class ReleaseServiceImpl implements ReleaseService {
 
   @Transactional
   @Override
-  public ReleaseResponseDto updateRelease(UUID id, ReleaseRequestDto releaseRequestDto)
-      throws ReleaseNotFoundException {
+  public ReleaseResponseDto updateRelease(UUID id, ReleaseRequestDto releaseRequestDto) {
     ReleaseEntity releaseEntityFromDb = releaseRepository.findById(id).orElseThrow(
-        () -> new ReleaseNotFoundException("Release with ID = " + id + " was not found"));
+        () -> new ReleaseNotFoundException(String.format("Release with ID = %s was not found", id)));
     releaseEntityFromDb.setStatus(releaseRequestDto.getStatus());
     releaseEntityFromDb.setVersion(releaseRequestDto.getVersion());
     //maybe there's smth else we need to change
@@ -82,9 +80,9 @@ public class ReleaseServiceImpl implements ReleaseService {
 
   @Transactional
   @Override
-  public void deleteReleaseById(UUID id) throws ReleaseNotFoundException {
+  public void deleteReleaseById(UUID id) {
     if(!releaseRepository.existsById(id)){
-      throw new ReleaseNotFoundException("Release with ID = " + id + " was not found");
+      throw new ReleaseNotFoundException(String.format("Release with ID = %s was not found", id));
     }
     releaseRepository.deleteById(id);
   }

@@ -1,7 +1,5 @@
 package com.group_3.kanbanboard.rest;
 
-import com.group_3.kanbanboard.exception.ProjectNotFoundException;
-import com.group_3.kanbanboard.exception.ReleaseNotFoundException;
 import com.group_3.kanbanboard.rest.dto.ReleaseRequestDto;
 import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
 import com.group_3.kanbanboard.service.impl.ReleaseServiceImpl;
@@ -37,22 +35,21 @@ public class ReleaseController {
    *
    * @param id Release id
    * @return Release with the given id
-   * @throws ReleaseNotFoundException throw if id not found
    */
   @Operation(summary = "Получение релиза по id")
   @GetMapping("/{id}")
-  public ResponseEntity<ReleaseResponseDto> getReleaseById(@PathVariable UUID id)
-      throws ReleaseNotFoundException {
+  public ResponseEntity<ReleaseResponseDto> getReleaseById(@PathVariable UUID id) {
     return ResponseEntity.ok().body(releaseService.getById(id));
   }
 
   /**
    * Get all releases
+   *
    * @return List of all releases
    */
   @Operation(summary = "Получить все релизы")
   @GetMapping
-  public ResponseEntity<List<ReleaseResponseDto>> getAllReleases(){
+  public ResponseEntity<List<ReleaseResponseDto>> getAllReleases() {
     return ResponseEntity.ok().body(releaseService.getAllReleases());
   }
 
@@ -61,14 +58,11 @@ public class ReleaseController {
    *
    * @param releaseRequestDto Release being added
    * @return Added release
-   * @throws ProjectNotFoundException throw if release with the same version already exists
-   * @throws ReleaseNotFoundException throw if project with id doesn't exist
    */
   @Operation(summary = "Добавление релиза")
   @PostMapping
   public ResponseEntity<ReleaseResponseDto> createRelease(
-      @RequestBody ReleaseRequestDto releaseRequestDto)
-      throws ProjectNotFoundException, ReleaseNotFoundException {
+      @RequestBody ReleaseRequestDto releaseRequestDto) {
 
     return ResponseEntity.ok(releaseService.addRelease(releaseRequestDto));
   }
@@ -79,12 +73,11 @@ public class ReleaseController {
    * @param id                Release id
    * @param releaseRequestDto New version of release
    * @return Updated release
-   * @throws ReleaseNotFoundException throw if id not found
    */
   @Operation(summary = "Обновление релиза")
   @PutMapping("/{id}")
   public ResponseEntity<ReleaseResponseDto> updateRelease(@PathVariable UUID id,
-      @RequestBody ReleaseRequestDto releaseRequestDto) throws ReleaseNotFoundException {
+      @RequestBody ReleaseRequestDto releaseRequestDto) {
 
     return ResponseEntity.ok().body(releaseService.updateRelease(id, releaseRequestDto));
   }
@@ -94,12 +87,10 @@ public class ReleaseController {
    *
    * @param id Release id
    * @return Deleted release
-   * @throws ReleaseNotFoundException throw if not found
    */
   @Operation(summary = "Удаление релиза")
   @DeleteMapping("/{id}")
-  public ResponseEntity<ReleaseResponseDto> deleteRelease(@PathVariable UUID id)
-      throws ReleaseNotFoundException {
+  public ResponseEntity<?> deleteRelease(@PathVariable UUID id) {
     releaseService.deleteReleaseById(id);
     return ResponseEntity.ok().build();
   }
