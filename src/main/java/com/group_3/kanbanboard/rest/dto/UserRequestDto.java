@@ -10,15 +10,20 @@ public class UserRequestDto {
     private String firstName;
     @Schema(description = "Фамилия пользователя")
     private String secondName;
+    @Schema(description = "Password")
+    private String password;
+    @Schema(description = "Username")
+    private String username;
     @Schema(description = "E-mail")
     private String mail;
     @Schema(description = "Роли")
     private Set<UserRole> roles;
 
-    public UserRequestDto(String firstName, String secondName, String mail,
-        Set<UserRole> roles) {
+    public UserRequestDto(String firstName, String secondName, String password, String username, String mail, Set<UserRole> roles) {
         this.firstName = firstName;
         this.secondName = secondName;
+        this.password = password;
+        this.username = username;
         this.mail = mail;
         this.roles = roles;
     }
@@ -41,6 +46,22 @@ public class UserRequestDto {
 
     public String getMail() {
         return mail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setMail(String mail) {
