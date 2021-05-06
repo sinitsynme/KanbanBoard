@@ -18,4 +18,6 @@ public interface UserService {
 
     void deleteUserById(UUID id);
 
+    void addAdmin();
+
 }

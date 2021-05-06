@@ -1,40 +1,37 @@
 package com.group_3.kanbanboard.service.impl;
 
-import com.group_3.kanbanboard.entity.ProjectEntity;
-import com.group_3.kanbanboard.entity.ReleaseEntity;
 import com.group_3.kanbanboard.entity.TaskEntity;
-import com.group_3.kanbanboard.exception.ProjectNotFoundException;
-import com.group_3.kanbanboard.exception.ReleaseNotFoundException;
 import com.group_3.kanbanboard.exception.TaskNotFoundException;
 import com.group_3.kanbanboard.mappers.TaskMapper;
-import com.group_3.kanbanboard.repository.ProjectRepository;
-import com.group_3.kanbanboard.repository.ReleaseRepository;
 import com.group_3.kanbanboard.repository.TaskRepository;
 import com.group_3.kanbanboard.rest.dto.TaskRequestDto;
 import com.group_3.kanbanboard.rest.dto.TaskResponseDto;
 import com.group_3.kanbanboard.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Service
 public class TaskServiceImpl implements TaskService {
 
+    private final TaskRepository taskRepository;
+    private final TaskMapper taskMapper;
+
     @Autowired
-    TaskRepository taskRepository;
-    @Autowired
-    ReleaseRepository releaseRepository;
-    @Autowired
-    TaskMapper taskMapper;
+    public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper) {
+        this.taskRepository = taskRepository;
+        this.taskMapper = taskMapper;
+    }
 
     @Transactional
     @Override
-    public TaskResponseDto getById(UUID id) throws TaskNotFoundException{
-        TaskEntity task =  taskRepository.findById(id).orElseThrow(
-                () -> new TaskNotFoundException("Task with ID = " + id + " not found"));
+    public TaskResponseDto getById(UUID id) {
+        TaskEntity task = taskRepository.findById(id).orElseThrow(
+                () -> new TaskNotFoundException(String.format("Task with ID = %s not found", id)));
 
         return taskMapper.toResponseDto(task);
     }
@@ -48,27 +45,18 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     @Override
-    public TaskResponseDto addTask(UUID releaseId, TaskRequestDto taskRequestDto) throws ReleaseNotFoundException {
-        ReleaseEntity release = releaseRepository.findById(releaseId).orElseThrow(
-                () -> new ReleaseNotFoundException("Release with ID = " + releaseId + " not found"));
-
+    public TaskResponseDto addTask(TaskRequestDto taskRequestDto) {
         TaskEntity task = taskMapper.toEntity(taskRequestDto);
-
-        List<TaskEntity> tasksFromDb = release.getTasks();
-
-        tasksFromDb.add(task);
-        release.setTasks(tasksFromDb);
-        releaseRepository.save(release);
-
+        taskRepository.save(task);
         return taskMapper.toResponseDto(task);
 
     }
 
     @Transactional
     @Override
-    public TaskResponseDto updateTask(UUID id, TaskRequestDto taskRequestDto) throws TaskNotFoundException {
-       TaskEntity taskFromDb = taskRepository.findById(id).orElseThrow(
-               () -> new TaskNotFoundException("Task with ID = " + id + " not found"));
+    public TaskResponseDto updateTask(UUID id, TaskRequestDto taskRequestDto) {
+        TaskEntity taskFromDb = taskRepository.findById(id).orElseThrow(
+                () -> new TaskNotFoundException(String.format("Task with ID = %s not found", id)));
 
         TaskEntity taskFromDto = taskMapper.toEntity(taskRequestDto);
         taskFromDto.setId(taskFromDb.getId());
@@ -80,8 +68,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     @Override
-    public void deleteTask(UUID id) throws TaskNotFoundException{
-        if(!taskRepository.existsById(id)) throw new TaskNotFoundException("Task with ID = " + id + " not found");
+    public void deleteTask(UUID id) {
+        if (!taskRepository.existsById(id)) throw new TaskNotFoundException(String.format("Task with ID = %s not found", id));
 
         taskRepository.deleteById(id);
     }

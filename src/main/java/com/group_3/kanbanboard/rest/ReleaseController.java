@@ -2,7 +2,7 @@ package com.group_3.kanbanboard.rest;
 
 import com.group_3.kanbanboard.rest.dto.ReleaseRequestDto;
 import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
-import com.group_3.kanbanboard.service.impl.ReleaseServiceImpl;
+import com.group_3.kanbanboard.service.ReleaseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/releases")
 public class ReleaseController {
 
-  private final ReleaseServiceImpl releaseService;
+  private final ReleaseService releaseService;
 
   @Autowired
-  public ReleaseController(ReleaseServiceImpl releaseService) {
+  public ReleaseController(ReleaseService releaseService) {
     this.releaseService = releaseService;
   }
 

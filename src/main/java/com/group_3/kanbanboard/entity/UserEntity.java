@@ -11,9 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "usr")
-
-
-public class UserEntity{
+public class UserEntity extends AbstractUser{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -121,7 +119,7 @@ public class UserEntity{
         return roles;
     }
 
-    public void setRole(Set<UserRole> roles) {
+    public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
 }

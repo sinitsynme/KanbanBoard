@@ -1,15 +1,14 @@
 package com.group_3.kanbanboard.service.impl;
 
 import com.group_3.kanbanboard.entity.UserEntity;
+import com.group_3.kanbanboard.enums.UserRole;
 import com.group_3.kanbanboard.exception.UserNotFoundException;
-import com.group_3.kanbanboard.mappers.ProjectMapper;
-import com.group_3.kanbanboard.mappers.ReleaseMapper;
 import com.group_3.kanbanboard.mappers.UserMapper;
-import com.group_3.kanbanboard.repository.ReleaseRepository;
 import com.group_3.kanbanboard.repository.UserRepository;
 import com.group_3.kanbanboard.rest.dto.UserRequestDto;
 import com.group_3.kanbanboard.rest.dto.UserResponseDto;
 import com.group_3.kanbanboard.service.UserService;
+import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,6 +73,15 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException("User not found");
         }
         userRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void addAdmin(){
+        UserEntity userEntity =  new UserEntity();
+        userEntity.setUsername("admin");
+        userEntity.setPassword("$2y$08$gFrPon1/FCbSEWFYPXMtX.yBDltLs4WbdLad3MFzQHmqmHfkM6mia");
+        userEntity.setRoles(Collections.singleton(UserRole.LEAD));
+        userRepository.save(userEntity);
     }
 }
 
