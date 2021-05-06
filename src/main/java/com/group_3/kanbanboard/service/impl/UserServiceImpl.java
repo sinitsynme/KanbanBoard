@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
   @Transactional
   @Override
-  public UserResponseDto getUserById(UUID id) throws UserNotFoundException {
+  public UserResponseDto getUserById(UUID id) {
     UserEntity user = userRepository.findById(id).orElseThrow(
         () -> new UserNotFoundException("User not found"));
     return userMapper.toResponseDto(user);
@@ -50,7 +50,10 @@ public class UserServiceImpl implements UserService {
 
   @Transactional
   @Override
-  public UserResponseDto addUser(UserRequestDto userRequestDto) throws UserNotFoundException {
+  public UserResponseDto addUser(UserRequestDto userRequestDto) {
+    if(userRepository.findByUsername(userRequestDto.getUsername()).isPresent()){
+      throw new UserNotFoundException("User already exists");
+    }
     UserEntity user = userMapper.toEntity(userRequestDto);
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     userRepository.save(user);
@@ -73,7 +76,7 @@ public class UserServiceImpl implements UserService {
 
   @Transactional
   @Override
-  public void deleteUserById(UUID id) throws UserNotFoundException {
+  public void deleteUserById(UUID id) {
     if (!userRepository.existsById(id)) {
       throw new UserNotFoundException("User not found");
     }
