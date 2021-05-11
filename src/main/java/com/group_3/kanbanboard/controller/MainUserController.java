@@ -38,8 +38,8 @@ public class MainUserController {
 
     @GetMapping("/userDetail")
     public String UserDetail(@RequestParam String userName, Model model) {
-       UserResponseDto userDto = new UserResponseDto();// - изменить
-       model.addAttribute("userDto", userDto);
+       UserEntity userDetails = (UserEntity) userDetailsService.loadUserByUsername(userName);
+       model.addAttribute("user", userDetails);
        return "userDetail";
 
     }
