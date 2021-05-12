@@ -10,7 +10,9 @@ import com.group_3.kanbanboard.mappers.TaskMapper;
 import com.group_3.kanbanboard.mappers.TaskMapperImpl;
 import com.group_3.kanbanboard.repository.TaskRepository;
 import com.group_3.kanbanboard.rest.dto.TaskResponseDto;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -18,6 +20,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.OngoingStubbing;
+import org.springframework.test.context.event.annotation.BeforeTestMethod;
 
 import java.util.Date;
 import java.util.Optional;
@@ -36,33 +39,28 @@ public class TaskServiceImplTest {
 
     @InjectMocks
     private TaskServiceImpl taskService;
-
     @Mock
     private TaskRepository taskRepository;
     @Mock
     private TaskMapper taskMapper;
 
-
     private TaskEntity expectedTask;
 
 
-//    @BeforeEach
-//    void setUp() {
-//        expectedTask = new TaskEntity(ID, TITLE, DESCRIPTION, END_DATE, TASK_CATEGORY, TASK_STATUS,
-//                new UserEntity(), new ProjectEntity(), new ReleaseEntity());
-//        System.out.println(expectedTask);
-//    }
-//
-//    @AfterEach
-//    void tearDown() {
-//        expectedTask = null;
-//    }
+    @Before
+    public void setUp() {
+        expectedTask = new TaskEntity(TITLE, DESCRIPTION, END_DATE, TASK_CATEGORY, TASK_STATUS,
+                new UserEntity(), new ProjectEntity(), new ReleaseEntity());
+    }
+
+    @After
+    public void tearDown() {
+        expectedTask = null;
+    }
 
 
     @Test
     public void getById() {
-        expectedTask = new TaskEntity(TITLE, DESCRIPTION, END_DATE, TASK_CATEGORY, TASK_STATUS,
-                new UserEntity(), new ProjectEntity(), new ReleaseEntity());
         Mockito.when(taskRepository.findById(Mockito.any())).thenReturn(Optional.of(expectedTask));
         Mockito.when(taskMapper.toResponseDto(Mockito.any(TaskEntity.class)))
                 .thenAnswer(invocation -> new TaskMapperImpl().toResponseDto(invocation.<TaskEntity>getArgument(0)));
@@ -70,6 +68,7 @@ public class TaskServiceImplTest {
 
         Assert.assertEquals(expectedTask.getDescription(), actualTaskDto.getDescription());
         Assert.assertEquals(expectedTask.getTitle(), actualTaskDto.getTitle());
+
     }
 
 //    @Test
