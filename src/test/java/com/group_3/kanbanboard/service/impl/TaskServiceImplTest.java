@@ -64,10 +64,10 @@ public class TaskServiceImplTest {
         Mockito.when(taskRepository.findById(Mockito.any())).thenReturn(Optional.of(expectedTask));
         Mockito.when(taskMapper.toResponseDto(Mockito.any(TaskEntity.class)))
                 .thenAnswer(invocation -> new TaskMapperImpl().toResponseDto(invocation.<TaskEntity>getArgument(0)));
-        TaskResponseDto actualTaskDto = taskService.getById(ID);
+        TaskResponseDto actualTaskResponseDto = taskService.getById(ID);
 
-        Assert.assertEquals(expectedTask.getDescription(), actualTaskDto.getDescription());
-        Assert.assertEquals(expectedTask.getTitle(), actualTaskDto.getTitle());
+        Assert.assertEquals(expectedTask.getDescription(), actualTaskResponseDto.getDescription());
+        Assert.assertEquals(expectedTask.getTitle(), actualTaskResponseDto.getTitle());
 
     }
 
