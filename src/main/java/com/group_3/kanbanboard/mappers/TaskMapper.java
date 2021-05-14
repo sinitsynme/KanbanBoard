@@ -11,7 +11,6 @@ import org.mapstruct.Mapping;
 public interface TaskMapper {
 
 
-
     public TaskRequestDto toRequestDto(TaskEntity entity);
 
     @InheritInverseConfiguration
