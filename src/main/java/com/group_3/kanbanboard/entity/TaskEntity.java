@@ -47,10 +47,11 @@ public class TaskEntity {
     public TaskEntity() {
     }
 
-    public TaskEntity(UUID id, String title, String description, Date endDate,
+
+    public TaskEntity(String title, String description, Date endDate,
                       TaskCategory taskCategory, TaskStatus taskStatus,
                       UserEntity performer, ProjectEntity project, ReleaseEntity release) {
-        this.id = id;
+
         this.title = title;
         this.description = description;
         this.endDate = endDate;
