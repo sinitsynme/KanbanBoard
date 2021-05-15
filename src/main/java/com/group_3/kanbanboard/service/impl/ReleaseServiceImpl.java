@@ -11,6 +11,7 @@ import com.group_3.kanbanboard.rest.dto.ProjectResponseDto;
 import com.group_3.kanbanboard.rest.dto.ReleaseRequestDto;
 import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
 import com.group_3.kanbanboard.service.ReleaseService;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -58,9 +59,12 @@ public class ReleaseServiceImpl implements ReleaseService {
     ProjectResponseDto projectResponseDto = projectService.getById(releaseRequestDto.getProjectId());
     ProjectEntity project = projectMapper.toEntity(projectResponseDto);
 
+     if (project.getReleases() == null) project.setReleases(new ArrayList<>());
+
      project.getReleases().add(release);
+     release.setProject(project);
      //releaseRepository.save(release);
-     projectService.updateProject(project.getId(), projectMapper.toRequestDto(project));
+     projectService.updateProject(releaseRequestDto.getProjectId(), projectMapper.toRequestDto(project));
 
     return releaseMapper.toResponseDto(release);
   }
