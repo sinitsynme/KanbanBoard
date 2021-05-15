@@ -6,6 +6,7 @@ import com.group_3.kanbanboard.entity.TaskEntity;
 import com.group_3.kanbanboard.entity.UserEntity;
 import com.group_3.kanbanboard.enums.TaskCategory;
 import com.group_3.kanbanboard.enums.TaskStatus;
+import com.group_3.kanbanboard.exception.TaskNotFoundException;
 import com.group_3.kanbanboard.mappers.TaskMapper;
 import com.group_3.kanbanboard.mappers.TaskMapperImpl;
 import com.group_3.kanbanboard.repository.TaskRepository;
@@ -71,6 +72,12 @@ public class TaskServiceImplTest {
         Assert.assertEquals(expectedTask.getTitle(), actualTaskResponseDto.getTitle());
     }
 
+    @Test(expected = TaskNotFoundException.class)
+    public void getByIdExc() {
+        TaskResponseDto actualTaskResponseDto = taskService.getById(ID);
+
+    }
+
     @Test
     public void getAllTasks() {
         List<TaskEntity> expectedTasks = Collections.singletonList(expectedTask);
@@ -105,10 +112,20 @@ public class TaskServiceImplTest {
         Assert.assertEquals(expectedTAskRequestDto.getTitle(), actualTaskResponseDto.getTitle());
     }
 
+    @Test(expected = TaskNotFoundException.class)
+    public void updateTaskExc() {
+        TaskResponseDto actualTaskResponseDto = taskService.updateTask(ID, expectedTAskRequestDto);
+    }
+
     @Test
     public void deleteTask() {
         UUID id = Mockito.any();
         Mockito.when(taskRepository.existsById(id)).thenReturn(Boolean.TRUE);
+    }
+
+    @Test(expected = TaskNotFoundException.class)
+    public void deleteTaskExc(){
+        taskService.deleteTask(ID);
     }
 
     private void reMapper() {
