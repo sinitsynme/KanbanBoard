@@ -1,5 +1,6 @@
 package com.group_3.kanbanboard.rest.dto;
 
+import com.group_3.kanbanboard.entity.ProjectEntity;
 import com.group_3.kanbanboard.enums.ReleaseStatus;
 import java.sql.Date;
 
@@ -8,18 +9,30 @@ public class ReleaseResponseDto {
   private String version;
 
   private Date startDate;
+
   private Date endDate;
 
   private ReleaseStatus status;
 
+  private ProjectEntity project;
+
   public ReleaseResponseDto(){}
 
   public ReleaseResponseDto(String version, Date startDate, Date endDate,
-      ReleaseStatus status) {
+      ReleaseStatus status, ProjectEntity project) {
     this.version = version;
     this.startDate = startDate;
     this.endDate = endDate;
     this.status = status;
+    this.project = project;
+  }
+
+  public ProjectEntity getProject() {
+    return project;
+  }
+
+  public void setProject(ProjectEntity project) {
+    this.project = project;
   }
 
   public String getVersion() {

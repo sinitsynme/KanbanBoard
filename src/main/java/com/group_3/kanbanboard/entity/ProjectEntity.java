@@ -20,7 +20,7 @@ public class ProjectEntity {
     @Column(name = "lead_id")
     private UUID leadId;
     @Column(name = "start_project")
-    private Boolean startProject;
+    private Boolean startProject = false;
 
     @OneToMany(
             mappedBy = "project",

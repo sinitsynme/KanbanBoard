@@ -2,8 +2,6 @@ package com.group_3.kanbanboard.rest.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.util.UUID;
-
 @Schema(description = "Задача")
 public class TaskRequestDto {
 //    @Schema(description ="id задачи")
@@ -11,11 +9,11 @@ public class TaskRequestDto {
     @Schema(description = "Название задачи")
     private String title;
     @Schema(description = "Категория задачи")
-    private String category;
+    private String taskCategory;
     @Schema(description = "Описание задачи")
     private String description;
     @Schema(description = "Статус задачи")
-    private String status;
+    private String taskStatus;
     @Schema(description = "Версия релиза")
     private int releaseId;
 
@@ -25,9 +23,9 @@ public class TaskRequestDto {
     public TaskRequestDto(String title, String category,
                           String description, String status, int releaseId) {
         this.title = title;
-        this.category = category;
+        this.taskCategory = category;
         this.description = description;
-        this.status = status;
+        this.taskStatus = status;
         this.releaseId = releaseId;
     }
 
@@ -39,12 +37,12 @@ public class TaskRequestDto {
         this.title = title;
     }
 
-    public String getCategory() {
-        return category;
+    public String getTaskCategory() {
+        return taskCategory;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setTaskCategory(String taskCategory) {
+        this.taskCategory = taskCategory;
     }
 
     public String getDescription() {
@@ -55,12 +53,12 @@ public class TaskRequestDto {
         this.description = description;
     }
 
-    public String getStatus() {
-        return status;
+    public String getTaskStatus() {
+        return taskStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setTaskStatus(String taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
     public int getReleaseId() {
