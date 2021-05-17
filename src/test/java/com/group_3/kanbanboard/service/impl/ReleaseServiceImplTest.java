@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import com.group_3.kanbanboard.entity.ProjectEntity;
 import com.group_3.kanbanboard.entity.ReleaseEntity;
 import com.group_3.kanbanboard.enums.ReleaseStatus;
+import com.group_3.kanbanboard.exception.ProjectNotFoundException;
 import com.group_3.kanbanboard.exception.ReleaseNotFoundException;
 import com.group_3.kanbanboard.mappers.ProjectMapper;
 import com.group_3.kanbanboard.mappers.ProjectMapperImpl;
@@ -123,6 +124,10 @@ public class ReleaseServiceImplTest {
     assertThrows(ReleaseNotFoundException.class, () -> releaseService.getById(unexistingId));
   }
 
+  @Test
+  public void getById_NULL() {
+    assertThrows(ReleaseNotFoundException.class, () -> releaseService.getById(null));
+  }
 
 
   @Test
@@ -131,13 +136,15 @@ public class ReleaseServiceImplTest {
 
     when(releaseRepository.findAll()).thenReturn(Arrays.asList(release1, release2));
 
-    List<ReleaseResponseDto> actualReleases = Stream.of(release1, release2).map(releaseMapper::toResponseDto).collect(
-        Collectors.toList());
+    List<ReleaseResponseDto> actualReleases = Stream.of(release1, release2)
+        .map(releaseMapper::toResponseDto).collect(
+            Collectors.toList());
 
-    Assertions.assertEquals(releaseService.getAllReleases().get(0).getVersion(), actualReleases.get(0).getVersion());
+    Assertions.assertEquals(releaseService.getAllReleases().get(0).getVersion(),
+        actualReleases.get(0).getVersion());
 
   }
-//test null parameter!
+
 
   @Test
   public void addRelease() {
@@ -147,7 +154,8 @@ public class ReleaseServiceImplTest {
     setUpReleaseMappers();
     setUpProjectMappers();
 
-    releaseService = new ReleaseServiceImpl(releaseRepository, projectService, releaseMapper, projectMapper);
+    releaseService = new ReleaseServiceImpl(releaseRepository, projectService, releaseMapper,
+        projectMapper);
 
     project.setReleases(new ArrayList<>());
 
@@ -157,42 +165,60 @@ public class ReleaseServiceImplTest {
 
     actualProject.setReleases(Collections.singletonList(release1));
 
-    requestDto = new ReleaseRequestDto(projectId, releaseVersion1, startDate, endDate, releaseStatus1);
+    requestDto = new ReleaseRequestDto(projectId, releaseVersion1, startDate, endDate,
+        releaseStatus1);
     ReleaseResponseDto releaseResponseDto = releaseService.addRelease(requestDto);
 
-    assertEquals(releaseResponseDto.getProject().getReleases().get(0).getVersion(), actualProject.getReleases().get(0).getVersion());
+    assertEquals(releaseResponseDto.getProject().getReleases().get(0).getVersion(),
+        actualProject.getReleases().get(0).getVersion());
   }
   //test null parameter!
 
+  @Test
+  public void addRelease_NULL_PROJECT_ID() {
+    setUpReleaseMappers();
+    setUpProjectMappers();
+    releaseService = new ReleaseServiceImpl(releaseRepository, projectService, releaseMapper,
+        projectMapper);
 
-//  @Test
+    requestDto = new ReleaseRequestDto(null, releaseVersion1, startDate, endDate, releaseStatus1);
+    assertThrows(ProjectNotFoundException.class, () -> releaseService.addRelease(requestDto));
+
+  }
+
+  //  @Test
 //  public void updateRelease() {
 //  }
 //
 //  @Test
 //  public void deleteReleaseById() {
 //  }
+//
 
-
-  private void setUpReleaseMappers(){
+  private void setUpReleaseMappers() {
     when(releaseMapper.toResponseDto(Mockito.any(ReleaseEntity.class)))
-        .thenAnswer(invocation -> new ReleaseMapperImpl().toResponseDto(invocation.<ReleaseEntity>getArgument(0)));
+        .thenAnswer(invocation -> new ReleaseMapperImpl()
+            .toResponseDto(invocation.<ReleaseEntity>getArgument(0)));
 
     when(releaseMapper.toEntity(Mockito.any(ReleaseRequestDto.class)))
-        .thenAnswer(invocation -> new ReleaseMapperImpl().toEntity(invocation.<ReleaseRequestDto>getArgument(0)));
+        .thenAnswer(invocation -> new ReleaseMapperImpl()
+            .toEntity(invocation.<ReleaseRequestDto>getArgument(0)));
 
 
   }
 
-  private void setUpProjectMappers(){
+  private void setUpProjectMappers() {
     when(projectMapper.toResponseDto(Mockito.any(ProjectEntity.class)))
-        .thenAnswer(invocation -> new ProjectMapperImpl().toResponseDto(invocation.<ProjectEntity>getArgument(0)));
+        .thenAnswer(invocation -> new ProjectMapperImpl()
+            .toResponseDto(invocation.<ProjectEntity>getArgument(0)));
 
     when(projectMapper.toRequestDto(Mockito.any(ProjectEntity.class)))
-        .thenAnswer(invocation -> new ProjectMapperImpl().toRequestDto(invocation.<ProjectEntity>getArgument(0)));
+        .thenAnswer(invocation -> new ProjectMapperImpl()
+            .toRequestDto(invocation.<ProjectEntity>getArgument(0)));
 
     when(projectMapper.toEntity(Mockito.any(ProjectResponseDto.class)))
-        .thenAnswer(invocation -> new ProjectMapperImpl().toEntity(invocation.<ProjectResponseDto>getArgument(0)));
+        .thenAnswer(invocation -> new ProjectMapperImpl()
+            .toEntity(invocation.<ProjectResponseDto>getArgument(0)));
   }
 
 }
