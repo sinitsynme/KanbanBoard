@@ -11,7 +11,7 @@ import com.group_3.kanbanboard.repository.ProjectRepository;
 import com.group_3.kanbanboard.repository.ReleaseRepository;
 import com.group_3.kanbanboard.repository.TaskRepository;
 import com.group_3.kanbanboard.repository.UserRepository;
-import com.group_3.kanbanboard.rest.dto.TaskResponseDto;
+import com.group_3.kanbanboard.rest.dto.*;
 import com.group_3.kanbanboard.service.ModelViewTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,4 +59,10 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
         return taskResponseDtos;
 
     }
+
+    public void addTaskWithDependencies(TaskRequestDto taskRequestDto, UserRequestDto userRequestDto, ProjectRequestDto projectRequestDto,
+                                        ReleaseRequestDto releaseRequestDto){
+
+    }
+
 }

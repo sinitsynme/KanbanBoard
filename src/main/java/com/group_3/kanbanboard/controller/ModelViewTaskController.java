@@ -1,33 +1,38 @@
 package com.group_3.kanbanboard.controller;
 
-import com.group_3.kanbanboard.rest.dto.ProjectResponseDto;
-import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
-import com.group_3.kanbanboard.service.ProjectService;
-import com.group_3.kanbanboard.service.ReleaseService;
+import com.group_3.kanbanboard.rest.dto.TaskResponseDto;
+import com.group_3.kanbanboard.service.ModelViewTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/projects/{projectId}/releases/{releaseId}/tasks/")
+@RequestMapping("users/{userName}/projects/{projectId}/releases/{releaseId}/tasks/")
 public class ModelViewTaskController {
 
-    private final ProjectService projectService;
-    private final ReleaseService releaseService;
+    private final ModelViewTaskService modelViewTaskService;
 
 
     @Autowired
-    public ModelViewTaskController(ProjectService projectService, ReleaseService releaseService) {
-        this.projectService = projectService;
-        this.releaseService = releaseService;
+    public ModelViewTaskController(ModelViewTaskService modelViewTaskService) {
+        this.modelViewTaskService = modelViewTaskService;
     }
 
-    public void getAllTasksForProjectAndRelease(@PathVariable UUID projectId, @PathVariable UUID releaseId) {
-        tas
+    @GetMapping
+    public String getAllTasksForUserProjectAndRelease
+            (@PathVariable String userName, @PathVariable UUID projectId, @PathVariable UUID releaseId, Model model) {
 
+           List<TaskResponseDto> taskResponseDtoList = modelViewTaskService.getTasksFromProjectAndRelease(userName, projectId, releaseId);
+           model.addAttribute("tasksList", taskResponseDtoList);
 
+        return "taskList";
     }
+
+
 }

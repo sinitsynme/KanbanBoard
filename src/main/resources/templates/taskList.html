@@ -5,10 +5,26 @@
     <title>Title</title>
 </head>
 <body>
-<div>
-
-
-
+?????????????????????????????????????????
+<table>
+    <thead>
+    <tr>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <!--<th>profile link</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasksList}">
+        <td><span th:text="${task.title}"> </span></td>
+        <td><span th:text="${task.description}"> </span></td>
+        <td><span th:text="${task.taskStatus}"> </span></td>
+        <!--<td><link></td>-->
+    </tr>
+    </tbody>
+</table>
+</div>
 </div>
 </body>
 </html>
