@@ -24,6 +24,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.Comparator;
 
 import java.util.*;
@@ -36,8 +37,9 @@ public class UserServiceImplWithMockTest {
     private static final String userName = "FirstSecondnameov";
     private static final String password = "pass";
     private static final String mail = "fs@ya.com";
-    private Set<UserRole> role = new HashSet<>(Arrays.asList(UserRole.USER,UserRole.ADMIN));
-    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(8) {};
+    private Set<UserRole> role = new HashSet<>(Arrays.asList(UserRole.USER, UserRole.ADMIN));
+    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(8) {
+    };
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -49,10 +51,11 @@ public class UserServiceImplWithMockTest {
     private UserRequestDto expectedUserRequestDto;
     @Mock
     private ProjectMapper expectedProjectMapper;
+
     @Before
     public void setUp() {
-        expectedUser = new UserEntity(ID,firstName,secondName,userName,password,mail,role);
-        expectedUserRequestDto = new UserRequestDto(firstName,secondName,password,userName,mail,role);
+        expectedUser = new UserEntity(ID, firstName, secondName, userName, password, mail, role);
+        expectedUserRequestDto = new UserRequestDto(firstName, secondName, password, userName, mail, role);
     }
 
     @After
@@ -68,7 +71,7 @@ public class UserServiceImplWithMockTest {
                 .thenAnswer(invocation -> new UserMapperImpl().toResponseDto(invocation.<UserEntity>getArgument(0)));
         UserResponseDto actual = userService.getUserById(ID);
         Assert.assertEquals(expectedUser.getFirstName(), actual.getFirstName());
-        Assert.assertEquals(expectedUser.getRoles(),actual.getRoles());
+        Assert.assertEquals(expectedUser.getRoles(), actual.getRoles());
     }
 
     @Test
@@ -83,7 +86,7 @@ public class UserServiceImplWithMockTest {
 
     @Test
     public void addUser() {
-        userService = new UserServiceImpl(userRepository,userMapper,passwordEncoder);
+        userService = new UserServiceImpl(userRepository, userMapper, passwordEncoder);
         Mockito.when(userMapper.toResponseDto(Mockito.any(UserEntity.class)))
                 .thenAnswer(invocation -> new UserMapperImpl().toResponseDto(invocation.<UserEntity>getArgument(0)));
         Mockito.when(userMapper.toEntity(Mockito.any(UserRequestDto.class)))
@@ -101,9 +104,5 @@ public class UserServiceImplWithMockTest {
         UUID id = Mockito.any();
         Mockito.when(userRepository.existsById(id)).thenReturn(Boolean.TRUE);
     }
-    @Test
-    public void delete(){
-        Mockito.when(expectedProjectMapper.toResponseDto(Mockito.any(ProjectEntity.class)))
-                .thenAnswer(invocation -> new ProjectMapperImpl().toResponseDto(invocation.<ProjectEntity>getArgument(0)));
-    }
+
 }

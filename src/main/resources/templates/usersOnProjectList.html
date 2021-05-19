@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>project users list</title>
+
+  <form th:action="@{/logout}" method="post">
+    <a href="/projects">Projects</a>
+    <a href="/tasks">Tasks</a>
+    <a href="/users">Users</a>
+    <a href="/profile">Profile</a>
+    <button type="submit">Sign Out</button>
+</form>
+  <a href="/invitePage">Invite User</a>
+</head>
+<body>
+<table>
+  <thead>
+  <tr>
+    <th>Username</th>
+    <th>E-mail</th>
+    <th>Role</th>
+    <!--<th>profile link</th>-->
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="user : ${projectUsers}">
+    <td><span th:text="${user.username }"> </span></td>
+    <td><span th:text="${user.mail}"> </span></td>
+    <td><span th:text="${user.getRoles()}"> </span></td>
+    <!--<td><link></td>-->
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
