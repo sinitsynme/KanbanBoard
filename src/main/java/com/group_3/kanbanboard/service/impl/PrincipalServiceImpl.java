@@ -27,7 +27,7 @@ public class PrincipalServiceImpl implements PrincipalService {
     this.passwordEncoder = passwordEncoder;
   }
 
-  private UserEntity getPrincipalEntity(){
+  public UserEntity getPrincipalEntity(){
     String currentPrincipalUsername = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
     return userRepository.findByUsername(currentPrincipalUsername).orElseThrow(() -> new UserNotFoundException("Something gone wrong"));
   }
