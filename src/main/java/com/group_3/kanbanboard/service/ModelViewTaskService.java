@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface ModelViewTaskService {
 
-   List<TaskResponseDto> getTasksFromProjectAndRelease(UUID projectId, UUID releaseId);
+   List<TaskResponseDto> getTasksFromUserProjectAndRelease(String userName, UUID projectId, UUID releaseId);
 
 
 

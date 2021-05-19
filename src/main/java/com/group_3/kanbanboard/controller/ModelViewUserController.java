@@ -35,15 +35,6 @@ public class ModelViewUserController {
         return "usersList";
     }
 
-
-    @GetMapping("/userDetail")
-    public String UserDetail(@RequestParam String userName, Model model) {
-       UserEntity userDetails = (UserEntity) userDetailsService.loadUserByUsername(userName);
-       model.addAttribute("user", userDetails);
-       return "userDetail";
-
-    }
-
     @GetMapping("/addAdmin")
     public void addAdmin(){
         userService.addAdmin();
