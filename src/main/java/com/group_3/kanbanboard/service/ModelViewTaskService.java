@@ -13,7 +13,6 @@ public interface ModelViewTaskService {
 
    List<TaskResponseDto> getTasksFromUserProjectAndRelease(String userName, UUID projectId, UUID releaseId);
 
-
-
+   UserResponseDto getUserByUserName(String userName);
 
 }
