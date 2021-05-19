@@ -56,9 +56,8 @@ public class ReleaseEntity {
   public ReleaseEntity() {
   }
 
-  public ReleaseEntity(UUID id, String version, Date startDate, Date endDate, ProjectEntity project,
+  public ReleaseEntity(String version, Date startDate, Date endDate, ProjectEntity project,
       ReleaseStatus status) {
-    this.id = id;
     this.version = version;
     this.startDate = startDate;
     this.endDate = endDate;
