@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
         () -> new UserNotFoundException("User not found"));
     userEntity.setFirstName(userRequestDto.getFirstName());
     userEntity.setSecondName(userRequestDto.getSecondName());
-    userEntity.setMail(userEntity.getMail());
+    userEntity.setMail(userRequestDto.getMail());
 
     userRepository.save(userEntity);
     return userMapper.toResponseDto(userEntity);
