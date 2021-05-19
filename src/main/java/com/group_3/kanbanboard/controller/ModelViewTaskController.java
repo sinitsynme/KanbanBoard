@@ -2,6 +2,7 @@ package com.group_3.kanbanboard.controller;
 
 import com.group_3.kanbanboard.rest.dto.TaskResponseDto;
 import com.group_3.kanbanboard.service.ModelViewTaskService;
+import com.group_3.kanbanboard.service.PrincipalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +14,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("users/{userName}/projects/{projectId}/releases/{releaseId}/tasks/")
+@RequestMapping("users/profile/projects/{projectId}/releases/{releaseId}/tasks/")
 public class ModelViewTaskController {
 
     private final ModelViewTaskService modelViewTaskService;
+
 
 
     @Autowired
@@ -26,9 +28,9 @@ public class ModelViewTaskController {
 
     @GetMapping
     public String getAllTasksForUserProjectAndRelease
-            (@PathVariable String userName, @PathVariable UUID projectId, @PathVariable UUID releaseId, Model model) {
+            (@PathVariable UUID projectId, @PathVariable UUID releaseId, Model model) {
 
-           List<TaskResponseDto> taskResponseDtoList = modelViewTaskService.getTasksFromProjectAndRelease(userName, projectId, releaseId);
+           List<TaskResponseDto> taskResponseDtoList = modelViewTaskService.getTasksFromProjectAndRelease( projectId, releaseId);
            model.addAttribute("tasksList", taskResponseDtoList);
 
         return "taskList";

@@ -10,9 +10,9 @@ import com.group_3.kanbanboard.mappers.TaskMapper;
 import com.group_3.kanbanboard.repository.ProjectRepository;
 import com.group_3.kanbanboard.repository.ReleaseRepository;
 import com.group_3.kanbanboard.repository.TaskRepository;
-import com.group_3.kanbanboard.repository.UserRepository;
-import com.group_3.kanbanboard.rest.dto.*;
+import com.group_3.kanbanboard.rest.dto.TaskResponseDto;
 import com.group_3.kanbanboard.service.ModelViewTaskService;
+import com.group_3.kanbanboard.service.PrincipalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,16 +25,17 @@ import java.util.stream.Collectors;
 public class ModelViewTaskServiceImpl implements ModelViewTaskService {
 
     private final TaskRepository taskRepository;
-    private final UserRepository userRepository;
     private final ProjectRepository projectRepository;
     private final ReleaseRepository releaseRepository;
+    private final PrincipalServiceImpl principalService;
     private final TaskMapper taskMapper;
 
 
     @Autowired
-    public ModelViewTaskServiceImpl(TaskRepository taskRepository, UserRepository userRepository, ProjectRepository projectRepository, ReleaseRepository releaseRepository, TaskMapper taskMapper) {
+    public ModelViewTaskServiceImpl(TaskRepository taskRepository, PrincipalServiceImpl principalService,
+                                    ProjectRepository projectRepository, ReleaseRepository releaseRepository, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
-        this.userRepository = userRepository;
+        this.principalService = principalService;
         this.projectRepository = projectRepository;
         this.releaseRepository = releaseRepository;
         this.taskMapper = taskMapper;
@@ -42,9 +43,8 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
 
 
     @Override
-    public List<TaskResponseDto> getTasksFromProjectAndRelease(String userName, UUID projectId, UUID releaseId) {
-        UserEntity user = userRepository.findByUsername(userName)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with username = %s not found", userName)));
+    public List<TaskResponseDto> getTasksFromProjectAndRelease(UUID projectId, UUID releaseId) {
+        UserEntity user = principalService.getPrincipalEntity();
 
         ProjectEntity project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ProjectNotFoundException(String.format("Project with id = %s not found", projectId)));
@@ -59,7 +59,6 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
         return taskResponseDtos;
 
     }
-
 
 
 }
