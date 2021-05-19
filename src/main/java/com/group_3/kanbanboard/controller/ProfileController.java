@@ -44,6 +44,9 @@ public class ProfileController {
 
   @PostMapping("/edit")
   public String editProfile(UserRequestDto requestDto){
+    if(requestDto.getFirstName().equals("") || requestDto.getSecondName().equals("") || requestDto.getMail().equals("")){
+      return "redirect:/profile/edit";
+    }
     userService.updateUser(principalService.getPrincipalId(), requestDto);
     return "redirect:/profile";
   }
