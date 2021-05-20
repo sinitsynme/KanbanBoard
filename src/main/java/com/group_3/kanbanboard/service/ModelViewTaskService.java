@@ -3,6 +3,7 @@ package com.group_3.kanbanboard.service;
 import com.group_3.kanbanboard.entity.ProjectEntity;
 import com.group_3.kanbanboard.entity.ReleaseEntity;
 import com.group_3.kanbanboard.entity.UserEntity;
+import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
 import com.group_3.kanbanboard.rest.dto.TaskResponseDto;
 import com.group_3.kanbanboard.rest.dto.UserResponseDto;
 
@@ -16,6 +17,8 @@ public interface ModelViewTaskService {
    TaskResponseDto getTaskByIdFromUserProjectAndRelease(String userName, UUID projectId, UUID releaseId, UUID taskId);
 
    UserResponseDto getUserByUserName(String userName);
+
+   ReleaseResponseDto getReleaseById(UUID id);
 
 
 }

@@ -8,12 +8,14 @@ import com.group_3.kanbanboard.exception.ProjectNotFoundException;
 import com.group_3.kanbanboard.exception.ReleaseNotFoundException;
 import com.group_3.kanbanboard.exception.TaskNotFoundException;
 import com.group_3.kanbanboard.exception.UserNotFoundException;
+import com.group_3.kanbanboard.mappers.ReleaseMapper;
 import com.group_3.kanbanboard.mappers.TaskMapper;
 import com.group_3.kanbanboard.mappers.UserMapper;
 import com.group_3.kanbanboard.repository.ProjectRepository;
 import com.group_3.kanbanboard.repository.ReleaseRepository;
 import com.group_3.kanbanboard.repository.TaskRepository;
 import com.group_3.kanbanboard.repository.UserRepository;
+import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
 import com.group_3.kanbanboard.rest.dto.TaskResponseDto;
 import com.group_3.kanbanboard.rest.dto.UserResponseDto;
 import com.group_3.kanbanboard.service.ModelViewTaskService;
@@ -35,17 +37,19 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
     private final UserRepository userRepository;
     private final TaskMapper taskMapper;
     private final UserMapper userMapper;
+    private final ReleaseMapper releaseMapper;
 
 
     @Autowired
     public ModelViewTaskServiceImpl(TaskRepository taskRepository, ProjectRepository projectRepository,
-                                    ReleaseRepository releaseRepository, UserRepository userRepository, TaskMapper taskMapper, UserMapper userMapper) {
+                                    ReleaseRepository releaseRepository, UserRepository userRepository, TaskMapper taskMapper, UserMapper userMapper, ReleaseMapper releaseMapper) {
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
         this.projectRepository = projectRepository;
         this.releaseRepository = releaseRepository;
         this.taskMapper = taskMapper;
         this.userMapper = userMapper;
+        this.releaseMapper = releaseMapper;
     }
 
     @Transactional
@@ -78,8 +82,13 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
     @Transactional
     @Override
     public UserResponseDto getUserByUserName(String userName){
-        return  userMapper.toResponseDto(userRepository.findByUsername(userName)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with username = %s not found", userName))));
+        return  userMapper.toResponseDto(getUserEntity(userName));
+    }
+
+    @Transactional
+    @Override
+    public ReleaseResponseDto getReleaseById(UUID id) {
+        return releaseMapper.toResponseDto(getReleaseEntity(id));
     }
 
     private ReleaseEntity getReleaseEntity(UUID releaseId) {
