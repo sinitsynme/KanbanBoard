@@ -15,9 +15,11 @@ import com.group_3.kanbanboard.repository.ReleaseRepository;
 import com.group_3.kanbanboard.repository.TaskRepository;
 import com.group_3.kanbanboard.repository.UserRepository;
 import com.group_3.kanbanboard.rest.dto.TaskResponseDto;
+import com.group_3.kanbanboard.rest.dto.UserResponseDto;
 import com.group_3.kanbanboard.service.ModelViewTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -46,7 +48,7 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
         this.userMapper = userMapper;
     }
 
-
+    @Transactional
     @Override
     public List<TaskResponseDto> getTasksFromUserProjectAndRelease(String userName, UUID projectId, UUID releaseId) {
 
@@ -61,19 +63,23 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
         return taskResponseDtos;
     }
 
+    @Transactional
     @Override
     public TaskResponseDto getTaskByIdFromUserProjectAndRelease(String userName, UUID projectId, UUID releaseId, UUID taskId) {
-        List<TaskResponseDto> tasks = getTasksFromUserProjectAndRelease(userName, projectId, releaseId);
-        TaskEntity taskEntity = taskRepository.findById(taskId)
-                .orElseThrow(() -> new TaskNotFoundException(String.format("Task with id = %s not found", taskId)));
-        TaskResponseDto task = taskMapper.toResponseDto(taskEntity);
-        if (tasks.contains(task)) {
-            return task;
-        } else
-            throw new TaskNotFoundException(
-                    String.format("Task with id = %s in release with id = %s and project with id = %s, in current login username = %s, not found",
-                            taskId, releaseId, projectId, userName));
 
+        TaskEntity taskEntity = taskRepository.findByPerformerAndProjectAndReleaseAndId(
+                getUserEntity(userName), getProjectEntity(projectId), getReleaseEntity(releaseId), taskId)
+                .orElseThrow(() -> new TaskNotFoundException(
+                        String.format("Task with id = %s in release with id = %s and project with id = %s, in current login username = %s, not found",
+                                taskId, releaseId, projectId, userName)));
+        return taskMapper.toResponseDto(taskEntity);
+    }
+
+    @Transactional
+    @Override
+    public UserResponseDto getUserByUserName(String userName){
+        return  userMapper.toResponseDto(userRepository.findByUsername(userName)
+                .orElseThrow(() -> new UserNotFoundException(String.format("User with username = %s not found", userName))));
     }
 
     private ReleaseEntity getReleaseEntity(UUID releaseId) {

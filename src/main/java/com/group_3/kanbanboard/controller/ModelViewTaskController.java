@@ -25,7 +25,9 @@ public class ModelViewTaskController {
 
 
     @Autowired
-    public ModelViewTaskController(ModelViewTaskService modelViewTaskService, PrincipalService principalService, TaskService taskService) {
+    public ModelViewTaskController(ModelViewTaskService modelViewTaskService,
+                                   PrincipalService principalService,
+                                   TaskService taskService) {
         this.modelViewTaskService = modelViewTaskService;
         this.principalService = principalService;
         this.taskService = taskService;
@@ -38,13 +40,9 @@ public class ModelViewTaskController {
                                                     @PathVariable UUID releaseId,
                                                     Model model) {
 
-        //  if(!principalService.getPrincipal().getUserName.equals userName){};
-
         List<TaskResponseDto> taskResponseDtoList =
                 modelViewTaskService.getTasksFromUserProjectAndRelease(userName, projectId, releaseId);
         model.addAttribute("tasksList", taskResponseDtoList);
-
-        //можно заменить на вызов сервисов из вышестоящей иерархии
 
         return "taskList";
     }

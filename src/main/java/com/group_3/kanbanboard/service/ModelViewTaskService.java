@@ -15,4 +15,7 @@ public interface ModelViewTaskService {
 
    TaskResponseDto getTaskByIdFromUserProjectAndRelease(String userName, UUID projectId, UUID releaseId, UUID taskId);
 
+   UserResponseDto getUserByUserName(String userName);
+
+
 }
