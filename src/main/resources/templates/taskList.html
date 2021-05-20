@@ -6,8 +6,24 @@
 </head>
 <body>
 <header>
-    <p><span th:text="${tasksList,}"></span></p>
+    <h1>Tasks list</h1>
+    <nav>
+        <a href="/users" th:href="@{/users}">USERS</a> |
+        <a href="/projects" th:href="@{/users/{userName}/projects(userName=${userName})}">PROJECTS</a> |
+        <a href="/tasks"
+           th:href="@{/users/{userName}/projects/{projectId}/releases/{releaseId}/tasks(userName=${userName}, projectId=${projectId}, releaseId=${releaseId})}">TASKS</a>
+        |
+    </nav>
+    <p><span th:text="${user.firstName}">user.userName</span></p>
+    <div>
+        <p><span th:text="${user.firstName}">user.firstName</span>
+            <span>  </span>
+            <span th:text="${user.secondName}">user.secondName</span>
+        <form>
 
+        </form>
+        </p>
+    </div>
 </header>
 <table>
     <thead>

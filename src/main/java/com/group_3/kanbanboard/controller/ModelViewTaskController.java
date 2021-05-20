@@ -1,6 +1,7 @@
 package com.group_3.kanbanboard.controller;
 
 import com.group_3.kanbanboard.rest.dto.TaskResponseDto;
+import com.group_3.kanbanboard.rest.dto.UserResponseDto;
 import com.group_3.kanbanboard.service.ModelViewTaskService;
 import com.group_3.kanbanboard.service.PrincipalService;
 import com.group_3.kanbanboard.service.TaskService;
@@ -43,6 +44,9 @@ public class ModelViewTaskController {
         List<TaskResponseDto> taskResponseDtoList =
                 modelViewTaskService.getTasksFromUserProjectAndRelease(userName, projectId, releaseId);
         model.addAttribute("tasksList", taskResponseDtoList);
+
+        UserResponseDto userResponseDto = modelViewTaskService.getUserByUserName(userName);
+        model.addAttribute("user", userResponseDto);
 
         return "taskList";
     }
