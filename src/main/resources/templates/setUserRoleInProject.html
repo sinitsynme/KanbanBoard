@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>user role</title>
+
+    <form th:action="@{/logout}" method="post">
+        <a href="/projects">Projects</a>
+        <a href="/tasks">Tasks</a>
+        <a href="/users">Users</a>
+        <a href="/profile">Profile</a>
+        <button type="submit">Sign Out</button>
+    </form>
+    <a href="/invitePage">Invite User</a>
+</head>
+<body>
+<table>
+    <thead>
+    <div style="margin-top: 10px;">
+        <b>Username: </b>
+        <b th:text="${principalDto.username}"></b>
+    </div>
+    </thead>
+    <tbody>
+    <div style="margin-top: 40px;">
+        <b>Role: </b>
+        <b th:text="${principalDto.roles}"></b>
+    </div>
+    <div style="margin-top: 10px;">
+        <b>First name: </b>
+        <b th:text="${principalDto.firstName}"></b>
+    </div>
+
+    <div style="margin-top: 10px;">
+        <b>Last name: </b>
+        <b th:text="${principalDto.secondName}"></b>
+    </div>
+
+    <div style="margin-top: 10px;">
+        <b>E-mail: </b>
+        <b th:text="${principalDto.mail}"></b>
+    </div>
+    </tbody>
+</table>
+</body>
+</html>

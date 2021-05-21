@@ -17,4 +17,6 @@ public interface PrincipalService {
 
   UserResponseDto getPrincipal();
 
+  UserEntity getPrincipalEntity();
+
 }
