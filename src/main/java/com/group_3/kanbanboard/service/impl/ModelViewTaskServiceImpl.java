@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import  org.thymeleaf.expression.Arrays;
 
 
 @Service
@@ -63,6 +64,7 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
         List<TaskResponseDto> taskResponseDtos = taskRepository.findByPerformerAndProjectAndRelease(user, project, release).stream()
                 .map(taskMapper::toResponseDto)
                 .collect(Collectors.toList());
+
 
         return taskResponseDtos;
     }

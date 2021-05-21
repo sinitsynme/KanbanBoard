@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Tasks list</title>
+    <style type="text/css">
+        H1, H2 {display: inline-block;}
+        FOR
+        TABLE { width: 300px; border-collapse: collapse;}
+        TD, TH {padding: 3px; border: 1px solid black;}
+        TH {background: #b0e0e6;}
+    </style>
 </head>
 <body>
 <header>
-
     <nav>
         <a href="/users" th:href="@{/users}">USERS</a> |
         <a href="/projects" th:href="@{/users/profile/projects}">PROJECTS</a> |
@@ -17,20 +23,17 @@
         |
     </nav>
     <hr>
-    <h1 style="display: inline-block">Tasks list</h1>
-    <h2 style="display: inline-block">Release:</h2>
-    <h2 style="display: inline-block" th:text="${release.version}">release.version</h2>
-
+    <h1>Tasks list</h1>
+    <h2>Release:</h2>
+    <h2 th:text="${release.version}">release.version</h2>
     <p><span th:text="${user.username}">user.username</span></p>
     <div>
         <span th:text="${user.firstName}">user.firstName</span>
         <span th:text="${user.secondName}">user.secondName</span>
-
         <form method="get" action="/users/profile/"
               style="display: inline-block">
             <button type="submit" class="btn">Profile</button>
         </form>
-
         <form method="post" action="/logout" style="display: inline-block">
             <button type="submit" class="btn">Logout</button>
         </form>
@@ -42,20 +45,21 @@
     <input type="search" name="search" placeholder="Search tasks" value="надо будет переделать с помощью th:value">
     <button type="submit" class="btn">Search</button>
 </form>
-<table>
-    <thead th:each="status: ${statuses}">
-    <tr th:text="${status}">status>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="task : ${tasksList}">
-        <td><span th:text="${task.title}"> </span></td>
-        <td><span th:text="${task.description}"> </span></td>
-        <td><span th:text="${task.taskStatus}"> </span></td>
-    </tr>
-    </tbody>
-</table>
-</div>
+
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th><span th:text="${statuses[0]}"></span></th>
+            <th><span th:text="${statuses[1]}"></span></th>
+            <th><span th:text="${statuses[2]}"></span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
