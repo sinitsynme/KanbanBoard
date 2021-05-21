@@ -11,7 +11,6 @@ public class ProjectRequestDto {
 
     @Schema(description = "Название проекта")
     private String title;
-
     @Schema(description = "Описание проекта")
     private String description;
     @Schema(description = "Создатель проекта")
