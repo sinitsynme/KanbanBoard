@@ -1,6 +1,7 @@
 package com.group_3.kanbanboard.controller;
 
 import com.group_3.kanbanboard.entity.UserEntity;
+import com.group_3.kanbanboard.service.PrincipalService;
 import com.group_3.kanbanboard.service.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,23 +10,26 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/projects/users")
-public class UsersListOnProjectController {
+@RequestMapping("/projects/users/role")
+public class UserPageInProjectController {
 
+    private final PrincipalService principalService;
     private final UserDetailsService userDetailsService;
     private final UserService userService;
 
-    public UsersListOnProjectController(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, UserService userService) {
+    public UserPageInProjectController(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, UserService userService, PrincipalService principalService) {
         this.userDetailsService = userDetailsService;
         this.userService = userService;
+        this.principalService = principalService;
     }
-
     @GetMapping
-    public String usersList(Model model) {
-        model.addAttribute("projectUsers" , userService.getAllUsers());
-        return "usersOnProjectList";
+    public ModelAndView getPrincipalProfile(){
+        ModelAndView modelAndView = new ModelAndView("setUserRoleInProject");
+        modelAndView.addObject("principalDto", principalService.getPrincipal());
+        return modelAndView;
     }
 
 
@@ -36,5 +40,6 @@ public class UsersListOnProjectController {
         return "userDetail";
 
     }
+
 
 }
