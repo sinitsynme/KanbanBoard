@@ -16,18 +16,11 @@ public class ProjectRequestDto {
     private String description;
     @Schema(description = "Создатель проекта")
     private UUID leadId;
-    @Schema(description = "Старт проекта")
-    private Boolean startProject;
-    @Schema(description = "Релизы")
-    private List<ReleaseEntity> releases;
 
-    public ProjectRequestDto(String title, String description, UUID leadId,
-        Boolean startProject, List<ReleaseEntity> releases) {
+    public ProjectRequestDto(String title, String description, UUID leadId) {
         this.title = title;
         this.description = description;
         this.leadId = leadId;
-        this.startProject = startProject;
-        this.releases = releases;
     }
 
     public String getTitle() {
@@ -52,21 +45,5 @@ public class ProjectRequestDto {
 
     public void setLeadId(UUID leadId) {
         this.leadId = leadId;
-    }
-
-    public Boolean getStartProject() {
-        return startProject;
-    }
-
-    public void setStartProject(Boolean startProject) {
-        this.startProject = startProject;
-    }
-
-    public List<ReleaseEntity> getReleases() {
-        return releases;
-    }
-
-    public void setReleases(List<ReleaseEntity> releases) {
-        this.releases = releases;
     }
 }
