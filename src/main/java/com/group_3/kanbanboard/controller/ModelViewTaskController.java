@@ -38,9 +38,9 @@ public class ModelViewTaskController {
 
 
     @GetMapping
-    public String getTasksFromUserProjectAndRelease(@PathVariable UUID projectId,
-                                                    @PathVariable UUID releaseId,
-                                                    Model model) {
+    public String getTasksFromProjectAndRelease(@PathVariable UUID projectId,
+                                                @PathVariable UUID releaseId,
+                                                Model model) {
 
         UserResponseDto userAsPrincipal = principalService.getPrincipal();
 

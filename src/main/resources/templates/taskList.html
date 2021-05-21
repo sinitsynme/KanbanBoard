@@ -1,30 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta content="text/html; charset=utf-8">
     <title>Tasks list</title>
     <style type="text/css">
-        H1, H2 {display: inline-block;}
-        FOR
-        TABLE { width: 300px; border-collapse: collapse;}
-        TD, TH {padding: 3px; border: 1px solid black;}
-        TH {background: #b0e0e6;}
+        H1, H2 {
+            display: inline-block;
+        }
+
+        TABLE {
+            width: 300px;
+            border-collapse: collapse;
+        }
+
+        TH {
+            background: #b0e0e6;
+        }
     </style>
 </head>
 <body>
 <header>
     <nav>
-        <a href="/users" th:href="@{/users}">USERS</a> |
-        <a href="/projects" th:href="@{/users/profile/projects}">PROJECTS</a> |
-        <a href="/releases"
+        <a href="/users">USERS</a> |
+        <a href="/users/profile/projects">PROJECTS</a> |
+        <a href="/users/profile/projects/{projectId}/releases"
            th:href="@{/users/profile/projects/{projectId}/releases(projectId=${projectId})}">RELEASES</a> |
-        <a href="/tasks"
+        <a href="/users/profile/projects/{projectId}/releases/{releaseId}/tasks"
            th:href="@{/users/profile/projects/{projectId}/releases/{releaseId}/tasks(projectId=${projectId}, releaseId=${releaseId})}">TASKS</a>
         |
     </nav>
     <hr>
     <h1>Tasks list</h1>
-    <h2>Release:</h2>
+    <h2  style="margin-left: 200px">Release:</h2>
     <h2 th:text="${release.version}">release.version</h2>
     <p><span th:text="${user.username}">user.username</span></p>
     <div>
@@ -40,23 +47,43 @@
     </div>
     <hr>
 </header>
-<form method="get" action="/tasks"
+
+<form method="get" action="/users/profile/projects/{projectId}/releases/{releaseId}/tasks"
       th:action="@{/users/profile/projects/{projectId}/releases/{releaseId}/tasks( projectId=${projectId}, releaseId=${releaseId})}">
-    <input type="search" name="search" placeholder="Search tasks" value="надо будет переделать с помощью th:value">
+    <input type="search" name="search" placeholder="Search tasks" value="">
     <button type="submit" class="btn">Search</button>
 </form>
 
 <div>
-    <table>
+    <table id="owner">
+        <caption>Cards of Task by status</caption>
         <thead>
         <tr>
-            <th><span th:text="${statuses[0]}"></span></th>
-            <th><span th:text="${statuses[1]}"></span></th>
-            <th><span th:text="${statuses[2]}"></span></th>
+            <th th:each="status : ${statuses}"><span th:text="${status}"></span></th>
         </tr>
         </thead>
         <tbody>
         <tr>
+            <td th:each="status : ${statuses}">
+                <table id="for_column">
+                    <tr th:each="task : ${tasksList}">
+                        <td>
+                            <div th:if="${task.taskStatus.equals(status.toString())}">
+                                <p><span th:text="${task.title}">task.title</span></p>
+                                <p><span th:text="${task.description}">task.description</span></p>
+                                <p><span th:text="${task.endDate}">task.endDate</span></p>
+                                <p><span th:text="${task.taskCategory}">task.taskCategory</span></p>
+                                <p>
+                                    <a href="/users/profile/projects/{projectId}"
+                                       th:href="@{/users/profile/projects/{projectId}(projectId=${projectId})}">project</a>
+                                    <a href="/users/profile/projects/{projectId}/releases/{releaseId}"
+                                       th:href="@{/users/profile/projects/{projectId}/releases/{releaseId}(projectId=${projectId},releaseId=${releaseId})}">release</a>
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
         </tr>
         </tbody>
     </table>
