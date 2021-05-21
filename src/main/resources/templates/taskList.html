@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks list</title>
+</head>
+<body>
+<header>
+    <nav>
+        <a href="/users" th:href="@{/users}">USERS</a> |
+        <a href="/projects" th:href="@{/users/{userName}/projects(userName=${userName})}">PROJECTS</a> |
+        <a href="/tasks"
+           th:href="@{/users/{userName}/projects/{projectId}/releases/{releaseId}/tasks(userName=${userName}, projectId=${projectId}, releaseId=${releaseId})}">TASKS</a>        |
+    </nav>
+    <hr>
+    <h1 style="display: inline-block">Tasks list</h1>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <h2 style="display: inline-block">Release:</h2>
+    <h2 style="display: inline-block" th:text="${release.version}">release.version</h2>
+
+    <p><span th:text="${user.firstName}">Нужен UserResponseDTO.name!!!</span></p>
+    <div>
+        <span th:text="${user.firstName}">user.firstName</span>
+        &nbsp
+        <span th:text="${user.secondName}">user.secondName</span>
+
+        <form method="get" action="/users/{userName}" th:action="@{/users/{userName}(userName=${userName})}"
+              style="display: inline-block">
+            <button type="submit" class="btn">Profile</button>
+        </form>
+
+        <form method="post" action="/logout"  style="display: inline-block">
+            <button type="submit" class="btn">Logout</button>
+        </form>
+    </div>
+    <hr>
+</header>
+<form method="get" action="/tasks"
+      th:action="@{/users/{userName}/projects/{projectId}/releases/{releaseId}/tasks(userName=${userName}, projectId=${projectId}, releaseId=${releaseId})}">
+    <input type="search" name="search" placeholder="Search tasks" value="надо будет переделать с помощью th:value">
+    <button type="submit" class="btn">Search</button>
+</form>
+<table>
+    <thead th:each="status: ${statuses}">
+    <tr th:text="${status}">status>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasksList}">
+        <td><span th:text="${task.title}"> </span></td>
+        <td><span th:text="${task.description}"> </span></td>
+        <td><span th:text="${task.taskStatus}"> </span></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</body>
+</html>

@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/users")
-public class MainUserController {
+public class ModelViewUserController {
 
     private final UserDetailsService userDetailsService;
     private final UserService userService;
 
-    public MainUserController(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, UserService userService) {
+    public ModelViewUserController(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, UserService userService) {
         this.userDetailsService = userDetailsService;
         this.userService = userService;
     }
@@ -33,15 +33,6 @@ public class MainUserController {
     public String usersList(Model model) {
         model.addAttribute("usersList" , userService.getAllUsers());
         return "usersList";
-    }
-
-
-    @GetMapping("/userDetail")
-    public String UserDetail(@RequestParam String userName, Model model) {
-       UserEntity userDetails = (UserEntity) userDetailsService.loadUserByUsername(userName);
-       model.addAttribute("user", userDetails);
-       return "userDetail";
-
     }
 
     @GetMapping("/addAdmin")
