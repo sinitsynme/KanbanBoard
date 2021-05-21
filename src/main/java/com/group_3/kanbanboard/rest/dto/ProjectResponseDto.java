@@ -1,7 +1,9 @@
 package com.group_3.kanbanboard.rest.dto;
 
+import com.group_3.kanbanboard.entity.ReleaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.List;
 import java.util.UUID;
 
 @Schema(description = "Проект")
@@ -14,6 +16,8 @@ public class ProjectResponseDto {
     private UUID leadId;
     @Schema(description = "Старт проекта")
     private Boolean startProject;
+    @Schema(description = "Релизы")
+    private List<ReleaseEntity> releases;
 
     public ProjectResponseDto() {
     }
