@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/projects/{projectId}/releases/{releaseId}/tasks/")
+@RequestMapping("users/profile/projects/{projectId}/releases/{releaseId}/tasks/")
 public class ModelViewTaskController {
 
     private final ModelViewTaskService modelViewTaskService;
@@ -42,14 +42,13 @@ public class ModelViewTaskController {
                                                     @PathVariable UUID releaseId,
                                                     Model model) {
 
-        UserResponseDto principal = principalService.getPrincipal();
+        UserResponseDto userAsPrincipal = principalService.getPrincipal();
 
         List<TaskResponseDto> taskResponseDtoList =
-                modelViewTaskService.getTasksFromUserProjectAndRelease(principal.getUsername(), projectId, releaseId);
+                modelViewTaskService.getTasksFromUserProjectAndRelease(userAsPrincipal.getUsername(), projectId, releaseId);
         model.addAttribute("tasksList", taskResponseDtoList);
 
-        UserResponseDto userResponseDto = modelViewTaskService.getUserByUserName(principal.getUsername());
-        model.addAttribute("user", userResponseDto);
+        model.addAttribute("user", userAsPrincipal);
 
         ReleaseResponseDto releaseResponseDto = modelViewTaskService.getReleaseById(releaseId);
         model.addAttribute("release", releaseResponseDto);
