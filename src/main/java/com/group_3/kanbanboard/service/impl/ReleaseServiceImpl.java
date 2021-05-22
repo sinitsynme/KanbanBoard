@@ -74,12 +74,12 @@ public class ReleaseServiceImpl implements ReleaseService {
   public ReleaseResponseDto updateRelease(UUID id, ReleaseRequestDto releaseRequestDto) {
     ReleaseEntity releaseEntityFromDb = releaseRepository.findById(id).orElseThrow(
         () -> new ReleaseNotFoundException(String.format("Release with ID = %s was not found", id)));
-    releaseEntityFromDb.setStatus(releaseRequestDto.getStatus());
-    releaseEntityFromDb.setVersion(releaseRequestDto.getVersion());
-    //maybe there's smth else we need to change
-    releaseRepository.save(releaseEntityFromDb);
+    ReleaseEntity releaseFromDto = releaseMapper.toEntity(releaseRequestDto);
+    releaseFromDto.setId(releaseEntityFromDb.getId());
 
-    return releaseMapper.toResponseDto(releaseEntityFromDb);
+    releaseRepository.save(releaseFromDto);
+
+    return releaseMapper.toResponseDto(releaseFromDto);
   }
 
   @Transactional
