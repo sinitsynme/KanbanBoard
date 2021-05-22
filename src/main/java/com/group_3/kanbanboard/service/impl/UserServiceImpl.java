@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
   @Transactional
   @Override
   public UserResponseDto addUser(UserRequestDto userRequestDto) {
-    if(userRepository.findByUsername(userRequestDto.getUsername()).isPresent()){
+    if (userRepository.findByUsername(userRequestDto.getUsername()).isPresent()) {
       throw new UserNotFoundException("User already exists");
     }
     UserEntity user = userMapper.toEntity(userRequestDto);
@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService {
         () -> new UserNotFoundException("User not found"));
     userEntity.setFirstName(userRequestDto.getFirstName());
     userEntity.setSecondName(userRequestDto.getSecondName());
+    userEntity.setMail(userRequestDto.getMail());
 
     userRepository.save(userEntity);
     return userMapper.toResponseDto(userEntity);

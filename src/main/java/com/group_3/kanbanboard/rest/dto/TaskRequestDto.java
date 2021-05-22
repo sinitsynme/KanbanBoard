@@ -15,7 +15,7 @@ public class TaskRequestDto {
     @Schema(description = "Статус задачи")
     private String taskStatus;
     @Schema(description = "Версия релиза")
-    private int releaseId;
+    private int releaseVersion;
 
     public TaskRequestDto() {
     }
@@ -26,7 +26,7 @@ public class TaskRequestDto {
         this.taskCategory = category;
         this.description = description;
         this.taskStatus = status;
-        this.releaseId = releaseId;
+        this.releaseVersion = releaseId;
     }
 
     public String getTitle() {
@@ -61,11 +61,11 @@ public class TaskRequestDto {
         this.taskStatus = taskStatus;
     }
 
-    public int getReleaseId() {
-        return releaseId;
+    public int getReleaseVersion() {
+        return releaseVersion;
     }
 
-    public void setReleaseId(int releaseId) {
-        this.releaseId = releaseId;
+    public void setReleaseVersion(int releaseVersion) {
+        this.releaseVersion = releaseVersion;
     }
 }
