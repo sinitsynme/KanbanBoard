@@ -90,4 +90,15 @@ public class ReleaseServiceImpl implements ReleaseService {
     }
     releaseRepository.deleteById(id);
   }
+
+  @Transactional
+  @Override
+  public List<ReleaseResponseDto> getReleasesFromProject(UUID projectId){
+    ProjectResponseDto projectResponseDto = projectService.getById(projectId);
+    ProjectEntity project = projectMapper.toEntity(projectResponseDto);
+
+    return releaseRepository.findAllByProject(project).stream().map(releaseMapper::toResponseDto).collect(
+        Collectors.toList());
+  }
+
 }

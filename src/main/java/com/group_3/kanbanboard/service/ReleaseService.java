@@ -11,11 +11,14 @@ public interface ReleaseService {
 
   List<ReleaseResponseDto> getAllReleases();
 
+  List<ReleaseResponseDto> getReleasesFromProject(UUID projectId);
+
   ReleaseResponseDto addRelease(ReleaseRequestDto releaseRequestDto);
 
   ReleaseResponseDto updateRelease(UUID id, ReleaseRequestDto releaseRequestDto);
 
   void deleteReleaseById(UUID id);
+
 
 
 }

@@ -3,7 +3,6 @@ package com.group_3.kanbanboard.rest.dto;
 import com.group_3.kanbanboard.entity.ProjectEntity;
 import com.group_3.kanbanboard.entity.TaskEntity;
 import com.group_3.kanbanboard.enums.ReleaseStatus;
-import com.sun.source.util.TaskListener;
 import java.sql.Date;
 import java.util.List;
 
@@ -21,7 +20,8 @@ public class ReleaseResponseDto {
 
   private List<TaskEntity> tasks;
 
-  public ReleaseResponseDto(){}
+  public ReleaseResponseDto() {
+  }
 
   public ReleaseResponseDto(String version, Date startDate, Date endDate,
       ReleaseStatus status, ProjectEntity project, List<TaskEntity> tasks) {

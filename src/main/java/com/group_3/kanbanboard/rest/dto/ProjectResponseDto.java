@@ -22,11 +22,13 @@ public class ProjectResponseDto {
     public ProjectResponseDto() {
     }
 
-    public ProjectResponseDto(String title, String description, UUID leadId, Boolean startProject) {
+    public ProjectResponseDto(String title, String description, UUID leadId,
+        Boolean startProject, List<ReleaseEntity> releases) {
         this.title = title;
         this.description = description;
         this.leadId = leadId;
         this.startProject = startProject;
+        this.releases = releases;
     }
 
     public String getTitle() {
@@ -59,5 +61,13 @@ public class ProjectResponseDto {
 
     public void setStartProject(Boolean startProject) {
         this.startProject = startProject;
+    }
+
+    public List<ReleaseEntity> getReleases() {
+        return releases;
+    }
+
+    public void setReleases(List<ReleaseEntity> releases) {
+        this.releases = releases;
     }
 }
