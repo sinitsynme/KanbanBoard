@@ -14,13 +14,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/projects/users/role")
-public class UserPageInProjectController {
+public class UserInProjectController {
 
     private final PrincipalService principalService;
     private final UserDetailsService userDetailsService;
     private final UserService userService;
 
-    public UserPageInProjectController(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, UserService userService, PrincipalService principalService) {
+    public UserInProjectController(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, UserService userService, PrincipalService principalService) {
         this.userDetailsService = userDetailsService;
         this.userService = userService;
         this.principalService = principalService;
