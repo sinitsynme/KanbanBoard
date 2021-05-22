@@ -26,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import  org.thymeleaf.expression.Arrays;
 
 
 @Service
@@ -55,36 +54,33 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
 
     @Transactional
     @Override
-    public List<TaskResponseDto> getTasksFromUserProjectAndRelease(String userName, UUID projectId, UUID releaseId) {
-
-        UserEntity user = getUserEntity(userName);
+    public List<TaskResponseDto> getTasksFromProjectAndRelease(UUID projectId, UUID releaseId) {
         ProjectEntity project = getProjectEntity(projectId);
         ReleaseEntity release = getReleaseEntity(releaseId);
 
-        List<TaskResponseDto> taskResponseDtos = taskRepository.findByPerformerAndProjectAndRelease(user, project, release).stream()
+        List<TaskResponseDto> taskResponseDtos = taskRepository.findBydProjectAndRelease(project, release).stream()
                 .map(taskMapper::toResponseDto)
                 .collect(Collectors.toList());
-
 
         return taskResponseDtos;
     }
 
     @Transactional
     @Override
-    public TaskResponseDto getTaskByIdFromUserProjectAndRelease(String userName, UUID projectId, UUID releaseId, UUID taskId) {
+    public TaskResponseDto getTaskByIdFromProjectAndRelease(UUID taskId, UUID projectId, UUID releaseId) {
 
-        TaskEntity taskEntity = taskRepository.findByPerformerAndProjectAndReleaseAndId(
-                getUserEntity(userName), getProjectEntity(projectId), getReleaseEntity(releaseId), taskId)
+        TaskEntity taskEntity = taskRepository.findByIdAndProjectAndRelease(
+                taskId,  getProjectEntity(projectId), getReleaseEntity(releaseId))
                 .orElseThrow(() -> new TaskNotFoundException(
-                        String.format("Task with id = %s in release with id = %s and project with id = %s, in current login username = %s, not found",
-                                taskId, releaseId, projectId, userName)));
+                        String.format("Task with id = %s in release with id = %s and project with id = %s, not found in principal",
+                                taskId, releaseId, projectId)));
         return taskMapper.toResponseDto(taskEntity);
     }
 
     @Transactional
     @Override
-    public UserResponseDto getUserByUserName(String userName){
-        return  userMapper.toResponseDto(getUserEntity(userName));
+    public UserResponseDto getUserByUserName(String userName) {
+        return userMapper.toResponseDto(getUserEntity(userName));
     }
 
     @Transactional

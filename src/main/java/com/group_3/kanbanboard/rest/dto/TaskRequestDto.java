@@ -8,18 +8,25 @@ import java.util.Date;
 public class TaskRequestDto {
     @Schema(description = "Название задачи")
     private String title;
+
     @Schema(description = "Описание задачи")
     private String description;
+
     @Schema(description = "Дата окончания")
     private Date endDate;
+
     @Schema(description = "Категория задачи")
     private String taskCategory;
+
     @Schema(description = "Статус задачи")
     private String taskStatus;
+
     @Schema(description = "Исполнитель задачи")
     private UserResponseDto performer;
+
     @Schema(description = "Проект")
     private ProjectResponseDto project;
+
     @Schema(description = "Версия релиза")
     private ReleaseResponseDto release;
 

@@ -12,9 +12,9 @@ import java.util.UUID;
 
 public interface ModelViewTaskService {
 
-   List<TaskResponseDto> getTasksFromUserProjectAndRelease(String userName, UUID projectId, UUID releaseId);
+   List<TaskResponseDto> getTasksFromProjectAndRelease(UUID projectId, UUID releaseId);
 
-   TaskResponseDto getTaskByIdFromUserProjectAndRelease(String userName, UUID projectId, UUID releaseId, UUID taskId);
+   TaskResponseDto getTaskByIdFromProjectAndRelease(UUID taskId, UUID projectId, UUID releaseId);
 
    UserResponseDto getUserByUserName(String userName);
 
