@@ -3,21 +3,15 @@ package com.group_3.kanbanboard.service.impl;
 import com.group_3.kanbanboard.entity.ProjectEntity;
 import com.group_3.kanbanboard.entity.ReleaseEntity;
 import com.group_3.kanbanboard.entity.TaskEntity;
-import com.group_3.kanbanboard.entity.UserEntity;
-import com.group_3.kanbanboard.exception.ProjectNotFoundException;
-import com.group_3.kanbanboard.exception.ReleaseNotFoundException;
 import com.group_3.kanbanboard.exception.TaskNotFoundException;
-import com.group_3.kanbanboard.exception.UserNotFoundException;
 import com.group_3.kanbanboard.mappers.ReleaseMapper;
 import com.group_3.kanbanboard.mappers.TaskMapper;
 import com.group_3.kanbanboard.mappers.UserMapper;
-import com.group_3.kanbanboard.repository.ProjectRepository;
-import com.group_3.kanbanboard.repository.ReleaseRepository;
 import com.group_3.kanbanboard.repository.TaskRepository;
-import com.group_3.kanbanboard.repository.UserRepository;
 import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
 import com.group_3.kanbanboard.rest.dto.TaskResponseDto;
 import com.group_3.kanbanboard.rest.dto.UserResponseDto;
+import com.group_3.kanbanboard.service.EntityService;
 import com.group_3.kanbanboard.service.ModelViewTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,21 +26,15 @@ import java.util.stream.Collectors;
 public class ModelViewTaskServiceImpl implements ModelViewTaskService {
 
     private final TaskRepository taskRepository;
-    private final ProjectRepository projectRepository;
-    private final ReleaseRepository releaseRepository;
-    private final UserRepository userRepository;
+    private final EntityService entityService;
     private final TaskMapper taskMapper;
     private final UserMapper userMapper;
     private final ReleaseMapper releaseMapper;
 
-
     @Autowired
-    public ModelViewTaskServiceImpl(TaskRepository taskRepository, ProjectRepository projectRepository,
-                                    ReleaseRepository releaseRepository, UserRepository userRepository, TaskMapper taskMapper, UserMapper userMapper, ReleaseMapper releaseMapper) {
+    public ModelViewTaskServiceImpl(TaskRepository taskRepository, EntityService entityService, TaskMapper taskMapper, UserMapper userMapper, ReleaseMapper releaseMapper) {
         this.taskRepository = taskRepository;
-        this.userRepository = userRepository;
-        this.projectRepository = projectRepository;
-        this.releaseRepository = releaseRepository;
+        this.entityService = entityService;
         this.taskMapper = taskMapper;
         this.userMapper = userMapper;
         this.releaseMapper = releaseMapper;
@@ -55,8 +43,8 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
     @Transactional
     @Override
     public List<TaskResponseDto> getTasksFromProjectAndRelease(UUID projectId, UUID releaseId) {
-        ProjectEntity project = getProjectEntity(projectId);
-        ReleaseEntity release = getReleaseEntity(releaseId);
+        ProjectEntity project = entityService.getProjectEntity(projectId);
+        ReleaseEntity release = entityService.getReleaseEntity(releaseId);
 
         List<TaskResponseDto> taskResponseDtos = taskRepository.findBydProjectAndRelease(project, release).stream()
                 .map(taskMapper::toResponseDto)
@@ -70,7 +58,7 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
     public TaskResponseDto getTaskByIdFromProjectAndRelease(UUID taskId, UUID projectId, UUID releaseId) {
 
         TaskEntity taskEntity = taskRepository.findByIdAndProjectAndRelease(
-                taskId,  getProjectEntity(projectId), getReleaseEntity(releaseId))
+                taskId, entityService.getProjectEntity(projectId), entityService.getReleaseEntity(releaseId))
                 .orElseThrow(() -> new TaskNotFoundException(
                         String.format("Task with id = %s in release with id = %s and project with id = %s, not found in principal",
                                 taskId, releaseId, projectId)));
@@ -80,28 +68,12 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
     @Transactional
     @Override
     public UserResponseDto getUserByUserName(String userName) {
-        return userMapper.toResponseDto(getUserEntity(userName));
+        return userMapper.toResponseDto(entityService.getUserEntity(userName));
     }
 
     @Transactional
     @Override
     public ReleaseResponseDto getReleaseById(UUID id) {
-        return releaseMapper.toResponseDto(getReleaseEntity(id));
-    }
-
-    private ReleaseEntity getReleaseEntity(UUID releaseId) {
-        return releaseRepository.findById(releaseId)
-                .orElseThrow(() -> new ReleaseNotFoundException(String.format("Release with id = %s not found", releaseId)));
-    }
-
-    private ProjectEntity getProjectEntity(UUID projectId) {
-        return projectRepository.findById(projectId)
-                .orElseThrow(() -> new ProjectNotFoundException(String.format("Project with id = %s not found", projectId)));
-    }
-
-
-    private UserEntity getUserEntity(String userName) {
-        return userRepository.findByUsername(userName)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with username = %s not found", userName)));
+        return releaseMapper.toResponseDto(entityService.getReleaseEntity(id));
     }
 }
