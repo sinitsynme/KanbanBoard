@@ -1,10 +1,15 @@
 package com.group_3.kanbanboard.rest.dto;
 
 import com.group_3.kanbanboard.entity.ProjectEntity;
+import com.group_3.kanbanboard.entity.TaskEntity;
 import com.group_3.kanbanboard.enums.ReleaseStatus;
 import java.sql.Date;
+import java.util.List;
+import java.util.UUID;
 
 public class ReleaseResponseDto {
+
+  private UUID id;
 
   private String version;
 
@@ -16,15 +21,28 @@ public class ReleaseResponseDto {
 
   private ProjectEntity project;
 
+  private List<TaskEntity> tasks;
+
   public ReleaseResponseDto(){}
 
-  public ReleaseResponseDto(String version, Date startDate, Date endDate,
-      ReleaseStatus status, ProjectEntity project) {
+  public ReleaseResponseDto(UUID id, String version, Date startDate, Date endDate,
+      ReleaseStatus status, ProjectEntity project,
+      List<TaskEntity> tasks) {
+    this.id = id;
     this.version = version;
     this.startDate = startDate;
     this.endDate = endDate;
     this.status = status;
     this.project = project;
+    this.tasks = tasks;
+  }
+
+  public UUID getId() {
+    return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
   }
 
   public ProjectEntity getProject() {
@@ -65,5 +83,13 @@ public class ReleaseResponseDto {
 
   public void setStatus(ReleaseStatus status) {
     this.status = status;
+  }
+
+  public List<TaskEntity> getTasks() {
+    return tasks;
+  }
+
+  public void setTasks(List<TaskEntity> tasks) {
+    this.tasks = tasks;
   }
 }
