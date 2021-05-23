@@ -11,6 +11,7 @@ import com.group_3.kanbanboard.service.PrincipalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -41,11 +42,13 @@ public class ModelViewProjectService {
                 .map(UserProjectEntity::getProject)
                 .collect(Collectors.toList());
 
-        List<UserProjectEntity> needProjectWithUsers = userProjectRepository.findByProject(needProject);
-        List<UserEntity> users = needProjectWithUsers.stream()
-                .map(UserProjectEntity::getUser)
-                .collect(Collectors.toList());
-
-        return users.stream().map(userMapper::toResponseDto).collect(Collectors.toList());
+        if (availableProjects.contains(needProject)) {
+            List<UserProjectEntity> needProjectWithUsers = userProjectRepository.findByProject(needProject);
+            List<UserEntity> users = needProjectWithUsers.stream()
+                    .map(UserProjectEntity::getUser)
+                    .collect(Collectors.toList());
+            return users.stream().map(userMapper::toResponseDto).collect(Collectors.toList());
+        }
+        return Collections.emptyList();
     }
 }
