@@ -12,7 +12,6 @@ import com.group_3.kanbanboard.rest.dto.ReleaseResponseDto;
 import com.group_3.kanbanboard.rest.dto.TaskResponseDto;
 import com.group_3.kanbanboard.rest.dto.UserResponseDto;
 import com.group_3.kanbanboard.service.EntityService;
-import com.group_3.kanbanboard.service.ModelViewTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class ModelViewTaskServiceImpl implements ModelViewTaskService {
+public class ModelViewTaskService {
 
     private final TaskRepository taskRepository;
     private final EntityService entityService;
@@ -32,7 +31,7 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
     private final ReleaseMapper releaseMapper;
 
     @Autowired
-    public ModelViewTaskServiceImpl(TaskRepository taskRepository, EntityService entityService, TaskMapper taskMapper, UserMapper userMapper, ReleaseMapper releaseMapper) {
+    public ModelViewTaskService(TaskRepository taskRepository, EntityService entityService, TaskMapper taskMapper, UserMapper userMapper, ReleaseMapper releaseMapper) {
         this.taskRepository = taskRepository;
         this.entityService = entityService;
         this.taskMapper = taskMapper;
@@ -41,12 +40,11 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
     }
 
     @Transactional
-    @Override
     public List<TaskResponseDto> getTasksFromProjectAndRelease(UUID projectId, UUID releaseId) {
         ProjectEntity project = entityService.getProjectEntity(projectId);
         ReleaseEntity release = entityService.getReleaseEntity(releaseId);
 
-        List<TaskResponseDto> taskResponseDtos = taskRepository.findBydProjectAndRelease(project, release).stream()
+        List<TaskResponseDto> taskResponseDtos = taskRepository.findByProjectAndRelease(project, release).stream()
                 .map(taskMapper::toResponseDto)
                 .collect(Collectors.toList());
 
@@ -54,7 +52,6 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
     }
 
     @Transactional
-    @Override
     public TaskResponseDto getTaskByIdFromProjectAndRelease(UUID taskId, UUID projectId, UUID releaseId) {
 
         TaskEntity taskEntity = taskRepository.findByIdAndProjectAndRelease(
@@ -66,13 +63,11 @@ public class ModelViewTaskServiceImpl implements ModelViewTaskService {
     }
 
     @Transactional
-    @Override
     public UserResponseDto getUserByUserName(String userName) {
         return userMapper.toResponseDto(entityService.getUserEntity(userName));
     }
 
     @Transactional
-    @Override
     public ReleaseResponseDto getReleaseById(UUID id) {
         return releaseMapper.toResponseDto(entityService.getReleaseEntity(id));
     }

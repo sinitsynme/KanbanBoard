@@ -5,12 +5,12 @@ import com.group_3.kanbanboard.entity.UserEntity;
 import com.group_3.kanbanboard.entity.UserProjectEntity;
 import com.group_3.kanbanboard.entity.UserProjectId;
 import com.group_3.kanbanboard.exception.TaskNotFoundException;
+import com.group_3.kanbanboard.exception.UserProjectNotFoundException;
 import com.group_3.kanbanboard.mappers.UserProjectMapper;
 import com.group_3.kanbanboard.repository.UserProjectRepository;
 import com.group_3.kanbanboard.rest.dto.UserProjectRequestDto;
 import com.group_3.kanbanboard.rest.dto.UserProjectResponseDto;
 import com.group_3.kanbanboard.service.EntityService;
-import com.group_3.kanbanboard.service.TaskService;
 import com.group_3.kanbanboard.service.UserProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +35,7 @@ public class UserProjectServiceImpl implements UserProjectService {
         this.entityService = entityService;
         this.userProjectMapper = userProjectMapper;
     }
+
     @Transactional
     @Override
     public UserProjectResponseDto getById(UserProjectId id) {
@@ -64,10 +65,12 @@ public class UserProjectServiceImpl implements UserProjectService {
 
         return userProjectMapper.toResponseDto(userProjectFromDto);
     }
+
     @Transactional
     @Override
     public void deleteUserProject(UserProjectId id) {
-        if (!userProjectRepository.existsById(id)) throw new TaskNotFoundException(String.format("Task with ID = %s not found", id));
+        if (!userProjectRepository.existsById(id))
+            throw new TaskNotFoundException(String.format("Task with ID = %s not found", id));
 
         userProjectRepository.deleteById(id);
     }
@@ -78,7 +81,7 @@ public class UserProjectServiceImpl implements UserProjectService {
         UserEntity user = entityService.getUserEntity(userId);
         List<UserProjectEntity> usersAndProjects = userProjectRepository.findByUser(user);
 
-       return usersAndProjects.stream().map(userProjectMapper::toResponseDto).collect(Collectors.toList());
+        return usersAndProjects.stream().map(userProjectMapper::toResponseDto).collect(Collectors.toList());
 
     }
 
@@ -91,8 +94,14 @@ public class UserProjectServiceImpl implements UserProjectService {
         return projectsAndUsers.stream().map(userProjectMapper::toResponseDto).collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public UserProjectResponseDto getUserProjectByUserAndProject(UUID userId, UUID projectId) {
-        return null;
+        UserProjectEntity userWithProject = userProjectRepository.findByUserAndProject(
+                entityService.getUserEntity(userId), entityService.getProjectEntity(projectId))
+                .orElseThrow(() -> new UserProjectNotFoundException(
+                        String.format("Relation entity UserProject with User (id = %s) and Project(id = %s) not found", userId, projectId)));
+        return userProjectMapper.toResponseDto(userWithProject);
     }
+
 }

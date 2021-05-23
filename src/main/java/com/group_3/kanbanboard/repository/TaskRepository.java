@@ -13,7 +13,7 @@ import java.util.UUID;
 @Repository
 public interface TaskRepository extends JpaRepository<TaskEntity, UUID> {
 
-    List<TaskEntity> findBydProjectAndRelease(ProjectEntity project, ReleaseEntity release);
+    List<TaskEntity> findByProjectAndRelease(ProjectEntity project, ReleaseEntity release);
 
     Optional<TaskEntity> findByIdAndProjectAndRelease(UUID id,
                                                       ProjectEntity project,

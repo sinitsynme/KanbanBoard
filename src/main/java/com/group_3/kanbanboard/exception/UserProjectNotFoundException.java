@@ -1,6 +1,6 @@
 package com.group_3.kanbanboard.exception;
 
-public class UserProjectNotFoundException extends ResourceNotFoundException{
+public class UserProjectNotFoundException extends RuntimeException{
 
     public UserProjectNotFoundException() {
     }
