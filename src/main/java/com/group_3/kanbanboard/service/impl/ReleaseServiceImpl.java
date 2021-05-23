@@ -2,7 +2,7 @@ package com.group_3.kanbanboard.service.impl;
 
 import com.group_3.kanbanboard.entity.ProjectEntity;
 import com.group_3.kanbanboard.entity.ReleaseEntity;
-import com.group_3.kanbanboard.exception.ProjectNotFoundException;
+import com.group_3.kanbanboard.enums.ReleaseStatus;
 import com.group_3.kanbanboard.exception.ReleaseNotFoundException;
 import com.group_3.kanbanboard.mappers.ProjectMapper;
 import com.group_3.kanbanboard.mappers.ReleaseMapper;
@@ -54,17 +54,20 @@ public class ReleaseServiceImpl implements ReleaseService {
   @Transactional
   @Override
   public ReleaseResponseDto addRelease(ReleaseRequestDto releaseRequestDto) {
-     ReleaseEntity release = releaseMapper.toEntity(releaseRequestDto);
+    ReleaseEntity release = releaseMapper.toEntity(releaseRequestDto);
+    release.setStatus(ReleaseStatus.BACKLOG);
 
-    ProjectResponseDto projectResponseDto = projectService.getById(releaseRequestDto.getProjectId());
+    ProjectResponseDto projectResponseDto = projectService
+        .getById(releaseRequestDto.getProjectId());
     ProjectEntity project = projectMapper.toEntity(projectResponseDto);
+    project.setId(releaseRequestDto.getProjectId());
 
-     if (project.getReleases() == null) project.setReleases(new ArrayList<>());
+    if (project.getReleases() == null) {
+      project.setReleases(new ArrayList<>());
+    }
 
-     project.getReleases().add(release);
-     release.setProject(project);
-     //releaseRepository.save(release);
-     projectService.updateProject(releaseRequestDto.getProjectId(), projectMapper.toRequestDto(project));
+    release.setProject(project);
+    releaseRepository.save(release);
 
     return releaseMapper.toResponseDto(release);
   }
@@ -85,7 +88,7 @@ public class ReleaseServiceImpl implements ReleaseService {
   @Transactional
   @Override
   public void deleteReleaseById(UUID id) {
-    if(!releaseRepository.existsById(id)){
+    if (!releaseRepository.existsById(id)){
       throw new ReleaseNotFoundException(String.format("Release with ID = %s was not found", id));
     }
     releaseRepository.deleteById(id);
