@@ -2,12 +2,14 @@ package com.group_3.kanbanboard.service.impl;
 
 import com.group_3.kanbanboard.entity.UserProjectEntity;
 import com.group_3.kanbanboard.entity.UserProjectId;
+import com.group_3.kanbanboard.enums.InProjectUserRole;
 import com.group_3.kanbanboard.exception.TaskNotFoundException;
 import com.group_3.kanbanboard.mappers.UserProjectMapper;
 import com.group_3.kanbanboard.repository.UserProjectRepository;
 import com.group_3.kanbanboard.rest.dto.UserProjectRequestDto;
 import com.group_3.kanbanboard.rest.dto.UserProjectResponseDto;
 import com.group_3.kanbanboard.service.UserProjectService;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,5 +62,12 @@ public class UserProjectServiceImpl implements UserProjectService {
         if (!userProjectRepository.existsById(id)) throw new TaskNotFoundException(String.format("Task with ID = %s not found", id));
 
         userProjectRepository.deleteById(id);
+    }
+
+    @Transactional
+    public boolean isUserLeadInProject(UUID userId, UUID projectId){
+        UserProjectId userProjectId = new UserProjectId(userId, projectId);
+        InProjectUserRole userRole = getById(userProjectId).getProjectUserRole();
+        return userRole == InProjectUserRole.LEAD;
     }
 }

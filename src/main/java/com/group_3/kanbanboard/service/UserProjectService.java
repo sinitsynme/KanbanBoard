@@ -16,4 +16,6 @@ public interface UserProjectService {
     UserProjectResponseDto updateUserProject(UserProjectId id, UserProjectRequestDto userProjectRequestDto);
 
     void deleteUserProject(UserProjectId id);
+
+    boolean isUserLeadInProject(UUID userId, UUID projectId);
 }
