@@ -12,14 +12,6 @@ import java.util.UUID;
 
 public interface UserProjectService {
 
-    UserProjectResponseDto getById(UserProjectId id);
-
-    UserProjectResponseDto addUserProject(UserProjectRequestDto userProjectRequestDto);
-
-    UserProjectResponseDto updateUserProject(UserProjectId id, UserProjectRequestDto userProjectRequestDto);
-
-    void deleteUserProject(UserProjectId id);
-
     List<UserProjectResponseDto> getUserProjectsFromUser(UUID userId);
 
     List<UserProjectResponseDto>  getUserProjectsFromProject(UUID projectId);

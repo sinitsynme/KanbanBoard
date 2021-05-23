@@ -38,45 +38,6 @@ public class UserProjectServiceImpl implements UserProjectService {
 
     @Transactional
     @Override
-    public UserProjectResponseDto getById(UserProjectId id) {
-        UserProjectEntity userProject = userProjectRepository.findById(id).orElseThrow(
-                () -> new TaskNotFoundException(String.format("userProject not found")));
-
-        return userProjectMapper.toResponseDto(userProject);
-    }
-
-    @Transactional
-    @Override
-    public UserProjectResponseDto addUserProject(UserProjectRequestDto userProjectRequestDto) {
-        UserProjectEntity userProject = userProjectMapper.toEntity(userProjectRequestDto);
-        userProjectRepository.save(userProject);
-        return userProjectMapper.toResponseDto(userProject);
-    }
-
-    @Transactional
-    @Override
-    public UserProjectResponseDto updateUserProject(UserProjectId id, UserProjectRequestDto userProjectRequestDto) {
-        UserProjectEntity userProjectFromDb = userProjectRepository.findById(id).orElseThrow(
-                () -> new TaskNotFoundException(String.format("Task with ID = %s not found", id)));
-
-        UserProjectEntity userProjectFromDto = userProjectMapper.toEntity(userProjectRequestDto);
-        userProjectFromDto.setId(userProjectFromDb.getId());
-        userProjectRepository.save(userProjectFromDto);
-
-        return userProjectMapper.toResponseDto(userProjectFromDto);
-    }
-
-    @Transactional
-    @Override
-    public void deleteUserProject(UserProjectId id) {
-        if (!userProjectRepository.existsById(id))
-            throw new TaskNotFoundException(String.format("Task with ID = %s not found", id));
-
-        userProjectRepository.deleteById(id);
-    }
-
-    @Transactional
-    @Override
     public List<UserProjectResponseDto> getUserProjectsFromUser(UUID userId) {
         UserEntity user = entityService.getUserEntity(userId);
         List<UserProjectEntity> usersAndProjects = userProjectRepository.findByUser(user);
