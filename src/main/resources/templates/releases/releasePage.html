@@ -38,6 +38,11 @@
 </div>
 
 <div style="margin-top: 10px;">
+  <b>Status: </b>
+  <b th:text="${releaseDto.status}"></b>
+</div>
+
+<div style="margin-top: 10px;">
   <b>Project: </b>
   <a th:href="@{/projects/{projectId}(projectId = ${projectId})}" th:text="${releaseDto.project.title}"></a>
 </div>
