@@ -1,6 +1,7 @@
 package com.group_3.kanbanboard.controller;
 
 import com.group_3.kanbanboard.entity.ReleaseEntity;
+import com.group_3.kanbanboard.enums.ReleaseStatus;
 import com.group_3.kanbanboard.exception.ForbiddenException;
 import com.group_3.kanbanboard.rest.dto.ProjectResponseDto;
 import com.group_3.kanbanboard.rest.dto.ReleaseRequestDto;
@@ -14,14 +15,12 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -124,12 +123,20 @@ public class ReleaseViewController {
 
   @PatchMapping("/{releaseId}")
   public String updateRelease(@PathVariable UUID projectId, @PathVariable UUID releaseId,
-      @RequestBody ReleaseRequestDto releaseRequestDto) {
+      ReleaseRequestDto releaseRequestDto, String formStatus, String formStartDate,
+      String formEndDate)
+      throws ParseException {
     checkAccess(projectId);
+
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    releaseRequestDto.setStatus(ReleaseStatus.valueOf(formStatus));
+    releaseRequestDto.setStartDate(simpleDateFormat.parse(formStartDate));
+    releaseRequestDto.setEndDate(simpleDateFormat.parse(formEndDate));
 
     releaseService.updateRelease(releaseId, releaseRequestDto);
 
-    return "redirect:/projects/{projectId}/releases";
+    return "redirect:/projects/{projectId}/releases/{releaseId}";
   }
 
   private boolean checkAccess(UUID projectId) {
