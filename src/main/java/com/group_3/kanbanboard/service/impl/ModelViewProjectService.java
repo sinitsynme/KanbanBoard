@@ -45,7 +45,7 @@ public class ModelViewProjectService {
         List<UserEntity> users = needProjectWithUsers.stream()
                 .map(UserProjectEntity::getUser)
                 .collect(Collectors.toList());
-        
+
         return users.stream().map(userMapper::toResponseDto).collect(Collectors.toList());
     }
 }
